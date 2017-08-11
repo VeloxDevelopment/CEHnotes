@@ -1,0 +1,255 @@
+Module 18: Cryptography & Steganography
+
+you are going to go after passwords that are encrypted
+MITM encrypted sessions - Gain access
+don't be a click monkey!
+you will need to hide information in locations on systems 
+we're going after passwords
+
+Module Objective:
+-Symmetric
+-Asymmetric
+-Message Integrity - Controls
+-Attacking Encryption
+-Steganography
+
+Encrypted hashes of passwords
+
+Symmetric Algorithm AES
+-Rijndael is the current AES (Advanced Encryption Standard) algorithm
+-"Rain Dahl" (rather than region deal)
+-Block size of 128 bits
+-Key length can be 128, 192 or 256 bits
+"The secret key is"
+
+the keyspace for 256 bits, it would take more than a googleplex of time , days and years to decrypt
+50% of time when 50% of keyspace.
+
+symmetric weakness = shared key 
+keystore or key change mechanism
+so that we can abuse the communication channel
+
+Asymmetric BUILD KEYS = image = asymmetric = asymmetric 2 = asymmetric 3
+Private key is kept
+public key is sent everywhere publicly
+whichever key you use first, you must use the other key to decrypt
+if encrypt with public key, private key is the only one that decrypts
+1 way math!
+
+Common Hash Algorithms
+-Message Digest
+ - MD2, MD4, MD5
+-Secure Hash Algorithm (SHA)
+ - SHA - 1 (160), SHA - 256, SHA - 384
+ - SHA - 512
+-HAVAL
+-RIPEMD
+-Tiger
+-WHIRLPOOL
+Image = DeansHash
+
+Characteristics of good hash functions
+-Condensed representation
+-One-way function
+-Non-linear relationship 
+-Hash calculated from whole, original message
+-Resistance to birthday attacks
+birthday paradox - tons of people in a room, what is the chance that 2 people will have the same birthday, 50% chance with 26
+looking for collisions in keys , if you key in your password and i key my password they could be the same hash
+if we can capture 1 hash its game over
+Rainbow table - Bubble sort
+we compute every password than sort values to find original password 
+
+when we attack we do 1 of 2 things, once the hash is captured we win
+or we Subset and create tables to words pre-hashed
+
+Operation of Hash Functions = image hashfunction
+
+Flaw of Hash Functions
+Theoretically the adversarie could capture the message and throw it away - create an evil message - spoof source - attach new digest result - send to recipient
+how does this do any good? different message, this is impersonation to convince the recipient that this is a valid message - fake proof
+ 
+Key agreement is NOT asymmetric encryption
+-How do we transmit a symmetric session key?
+ - Use asymmetric encryption
+-How do we negotiate a key without prior meeting?
+ - Use key management protocol
+ - asymmetric cryptographic process
+ - BUT not asymmetric encryption
+- What are the KEY management ONLY protocols?
+ - Diffie-Hellman Key management protocol - Tool for IPSEC key agreement - consistent
+Remainder math, madula math 
+
+Operation to create Digital Signature = digsig = image = digsig2
+
+What could attacker do? = image = sender 
+-Intercept message
+ - DOS
+-Change message add new signature
+ - if the receiver doesnt verify
+ - if the receiver doesn't pay attention
+-Convince sender that signature is valid - we could resolve the certificate store to the wrong location
+ - falsely resolve key storage location
+
+PGP & digital signatures
+-Privacy for the individual or organization
+-Uses digital signatures
+-We need no central authority
+-There is no landlord
+-Thought of as fringe / hacker / geeky
+-Made by Phil Zimmerman 1991
+-Originally MD5 + RSA
+
+PROTECT RESULT , this could create a map for bad attackers 
+
+PGP web of trust = image = PGPweb
+-No Central Authority
+-Does the key actually belong to the person to whom it appears to belong?
+-Does it belong to someone you can trust to certify other keys?
+
+SSL = image = SSL
+Client = "Client Hello" ------> Server = "Server Hello" + Certificate(public key) + "Server hello" Done -----> Client = Client Key Exchange;Change Cipher Spec;Finished -----> Server = Change Cipher Spec;Finished 
+Man in the middle is to get inbetween the client and the server 
+the client sends a key the website wants to sell stuff so they allow for the generated key to save time and hassle to slow them down
+lack of validation = we can be that person in the middle
+
+Password sidebar
+-Today as of NTLMv2
+-If a password is > 15 characters
+-Windows stores the constant AAD3B435B5140EEAAD3B435B51404EE = equivalent to a null password
+-Since your password is not null
+ - Attempts to crack that hash will fail 
+ 
+Password, HASH, key?
+-If attacker has hash of password
+-Does not need to brute-force - we have a rainbow table 
+ - clear text password
+-Use hash of an arbitrary user account
+-Authenticate against a remote system
+-Impersonate that user
+-Attacker's perspective
+ - hashes are functionally equivalent to password 
+
+Password Generation = image = passwordgen
+-Password > Hashed = key
+-Password
+-SHA- 160
+-SHA- 256
+ - Who cares how long?
+
+Brute Force for DES = 56Bit Key = image = bruteforcedes
+guess every key in the combination
+
+AES (256bit key) Brute Force? = image = AESBRUTE
+
+Why bother to brute force? = image = whybruteforce
+we use old databases of passwords to penetration tests , normally people just add to the original password
+
+Attack names
+-Plaintext
+-Ciphertext only
+-Man in the middle
+a -----attack----> b
+
+Plaintext Attacks = image = plaintext
+-All Plaintext attacks start with plaintext and end with ciphertext
+-Known = no control over A's input, but see the output
+-Chosen = control over A's input and see the output
+-Adaptive Chosen = control over A's system for long period 
+
+Ciphertext Attacks
+-All Ciphertext attacks start with Ciphertext
+-Ciphertext-Only = assumption that evil is listening
+-Chosen = control over A's input and see the output
+-Adaptive Chosen = control over A's system for long period
+
+What we don't do as pen tester
+-Crack
+ - Passwords
+ - Whole disk encryption
+ - eMail
+
+What do we do as Pen testers - hash
+-Password hash acquisition
+ - Implies it is only a matter of time before we have the password
+-Hash comparison
+ - Collect the list of all hashes
+ - Compare to the list of know hashes
+ - Verifies weak passwords
+-Rainbow table
+ - Order set of hashes to speed searching
+ - Bubble sort
+ 
+What we do as pen testers?
+-Attack weak implementations
+ - SSL single side certificates - VPNS
+ - Wireless WEP/WPA
+-Define use of weak algorithms
+ - DES, 3DES, SHA1, MD4, RC4
+-Suggest strong algorithms
+ - AES, SHA 2/SHA3, RC6
+
+Steganography
+-Science of "covered writing" NOT encryption
+ - You need encryption if you are found output
+-Think invisible ink
+ - You still need to pass the paper
+ - Recipient still needs to know how to reveal message
+-Sender and receiver have to agree upon
+ - Carrier files
+ - Steganographic software
+ - Password
+-Stego programs are free and easy to use 
+
+Attackers stimulus & Defenders response
+-Attackers want to transmit data
+-Defenders use IDS/IPS (DLP) = Data loss prevention
+ - Looking for key words
+ - Scanning email
+ - Scanning attachments
+-Attackers use Stego to work around 
+
+Rules of successful stego
+-Anything inside anything = image = AiA = poriginal
+-Carrier must be smaller than container
+-Communicate tool used & container
+-Delete container
+-NOT encryption
+ - So always use encryption
+
+Clues that might suggest use of Stego
+-Technical capabilities
+-Stego software
+-Wiping software
+-Multimedia files
+-Type of crime 
+
+Steganalysis
+-"The process of detecting steganography by looking at variances between bit patterns and unusually large file sizes"
+-Tools
+ - WetStone Technologies' Gargoyle
+ - StegoWatch
+ -Stegdetect, provided by Niels Provos
+Stego
+-Problematic for digital forensics investigators and presecutors
+-There are tools free and fee
+ - StegAlyzerAS $995
+
+Attacking Crypto VS Stego
+-We cannot apply same tools/techniques
+Steganography
+-Not cryptology
+
+Resources
+-http://www.cryptool.org/en/ - download files and learn ALL techniques 
+-http://www.cryptool-online.org/
+-http://www.truecrypt.org/ - use this for report to company
+-http://www.sarc-wv.com/products/stegalyzeras/learn_more.aspx
+
+
+
+
+
+
+
+

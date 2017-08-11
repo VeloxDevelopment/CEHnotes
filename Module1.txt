@@ -1,0 +1,383 @@
+CEH NOTES
+Module 1: Intro To the Course
+how do you be an ethical hacker?
+Objective:
+Definitions and Terminology
+Phases
+-Attacking
+-Ethical Hacking
+-Professional penetration testing
+Legal Implications
+
+Why are we doing this?
+when something is built, we just want to get it to work.
+when we invented the wheel, we just wanted it to roll
+we just want systems to work.
+
+Why Security?
+Evolution of technology focused availability
+-not confidentiality or integrity
+Increasing complexity of computer infrastructure administration and management
+direct impact of security breach on corporate asset base and reputation
+increasingly connected world
+
+Essential Terminology
+Threat - An action or event that might reduce security - confidentiality integrity accessability
+Threat Agent - A person who takes inappropriate action - they use the threat - on vulnerability
+Vulnerability - A weakness, design flaw, or implementation error - maybe lazy administrator
+Attack - Assault on System - going after vulnerability
+Exploit - A defined way to take advantage of a vulnerability
+
+
+Can hacking be ethical?
+hacker - a person who enjoys learning the details of computer systems and stretch their capabilities - person - likes to figure out how stuff works
+hacking - rapid developments of new programs or the reverse engineering of already existing software - thing - breaking something apart
+cracker - refers to an attacker who uses hacking skills against organizations causing harm - password breaking - ec council - against organizations - attacker = cracker
+ethical hacker - security professional who uses hacking skills for organizations to increase security - good - follow proper process
+
+Penetration testing
+do what the attacker does before they do it to know the problem - fix it before it happens
+Repel - put up new controls , put asset behind controls
+
+What skills do you need?
+good at computers
+
+Skill profile:
+Computer expert adept at technical - short cuts - specialist in some way shape or form - linux / aix / ios-mac / Windows - NOT 1 Person for all
+in-depth knowledge about platforms
+Networking
+Hardware / software
+Keeps with Current - INFOSEC NEWS - REDDIT - NEWS AGGREGATION TOOLS TO KEEP YOU INTO TOOLS AND SECURITY "I've read this and leads to 8-9 of study"
+
+I understand this but have you heard of this? love/hate now i've got 8 hrs worth of homework
+prepare for the homework!
+
+Modes of Ethical Hacking
+Black-box - no prior knowledge - person - NO CLUE - what attackers do
+White-box - complete knowledge - everything - trusted insider, what could we do? 
+Gray-box - access by insiders within the network - intranet access
+start with black box and with reconassince it becomes a whitebox
+
+Hacker Classes
+Black hats - bad - self proclaimed evil
+white hats - good
+gray hats - ummm? - nobody knows
+ethical hacker types
+-Former black hats - probably
+-White hats - could be
+-Consulting firms - work with
+
+Hacktivism
+Refers to 'hacking with / for a cause' - i want freedom! justice! liberty! really means Love of Money!
+a TormentedX or political agenda - more and more these days - the person i am afraid of is the person for the cause - do not get tired easily
+Aims at sending a message - hey i want this access even if i go to jail, i don't care - hacktivism
+gaining unauthorized access is a crime
+
+What does a malicious hacker do?
+Reconnaissance
+Scanning
+Gaining Access
+Maintaining Access
+Covering Tracks
+Sell or use the assets
+
+What does a penetration tester do?
+he who writes the contract wins!
+they do all of the things an attacker does, they've already been paid, do not sell the assets and report
+
+What does an Ethical Hacker Do?
+dont talk about the contract much or the report
+do the same as pen testers
+
+Penetration testing business
+Contract 
+Scope / Plan - contract and scope go hand in hand, what do you want tested? create a plan? this is costing this much, this is how long it will take
+Reconnaissance / Scanning - figure it out
+Do = Attack
+-Gaining Access
+-Maintain Access
+-Covering Tracks
+REPORT = business action items - we found these things , fix them this way! what business is all about!
+
+Professional Testing Process
+job is to fly down crap all over it , give a good report , REMEDIATE NOT INCLUDED
+Do = CEH only ECCOUNCIL - contract ONLY
+
+What is the goal?
+Who, What, Where, When, How 
+What is the value of the asset? - Ask what are you protecting , what is it worth? if its 1m i don't want to do 1m test
+Who is commissioning the test? Technical or Business?
+Who is going to read report? - Technical person write report 1 way , Business person another way of report
+What is the budget for remediation? 10,000$ for 1m asset or calculated over time
+
+Generic list of options to client
+Make it easy - like a menu in a food restaurant - dont have time or money for ALL ON THE MENU - BIG LIST - EXPLAIN
+cross off what they don't want tested - Stay away from DOS or TormentedX engineering
+Circle what they do want tested - i want this i want that
+Question mark on what they don't know - do you understand what that thing is, do we actually need that?
+sign off on draft of plan - statement of work , scoping document , write formal plan 
+Where do we get the menu from?
+
+Open Source Security Testing = OSST version 3 - HARD CHOICES EASY LIFE - EASY CHOICES HARD LIFE - Mr. Scott 2017 <3
+Information Security - CIRCLE CROSS OFF AND QUESTION MARK - theres all the money - sometimes they just want this 1 thing - bring in next set of experts - methodology
+1. Competitive intelligence review
+2. Privacy review
+3. Document Grinding
+Process Security
+1. Request Testing
+2. Guided Suggestion Testing
+3. Trusted Persons Testing
+4. Communications Security
+PBX Testing
+1. Voicemail Testing
+2. FAX Review
+3. Modem Testing
+Internet Technology Security
+1. Network Surveying
+2. Port Scanning
+3. Services Identification
+4. System Identification
+5. Vulnerability Research
+6. Internet Application Testing
+7. Router Testing
+8. Trusted Systems Testing
+9. Firewall Testing
+10. Intrusion Detection System
+
+How Much Time?
+Somone is getting paid by the day - gotta get paid , how much money do you have? range of days?
+-Cannot test forever
+Deadline for Compliance - may have a deadline - military - FISMA regulation Special publication 853 states something to the effect of pen test on annual basis - when is report? work around organization
+Deadling for Reporting - may be that i need this report before the compliance, so that we can do something about it
+Deadline for product release - when? work your way back , how long will it take to do the test? 5-10 days? how long for the fix? divide it up give time.
+-minus time for testing
+-minus time for fixing
+
+what rookies forget about!!!
+3rd parties - where are the servers sitting?
+Colocation
+Cloud provider
+Partner - have a system?
+Vendor - this part of connectivity
+What level of interaction is required?
+what if we're not allowed to go this far? block all access! GET PERMISSION , BUILD IN SCOPE
+MAKE SURE THIS IS IN WRITING
+Prepare with forensic approach - not an ECCOUNCIL thing , when building a lab , create a virtual image
+Clean virtual machines for whole team
+New Database - can take the data that is being collected in 1 place , self contained
+Virtual network that records all activity - listener
+Possible client recording - client should also record all activity through their network , we are prepared to collect without corrupting
+
+How do you collect Data?
+Physical - locations you have been to bring to client as proof , can collect from SCOPE
+-GPS tracking & photographs
+ORGANIC or INORGANIC
+Virtual
+-Packet Captures & Screen Shots
+ORGANIC or INORGANIC
+
+Penetration testing methodology
+Discovery - hey theres a website out there with our name on it , what is their IP
+- CEH - Reconnaissance
+- Find your target
+Enumeration - what ports are open?
+- CEH - Scanning
+- list their software and versions
+Vulnerability Mapping -
+- CEH - ? - no name - assume tool will get them there
+- Find exploit to match the weakness - version X has a buffer overflow vulnerability , map vulnerability , dont stick your finger in the wound
+Exploitation - does this hurt?
+- CEH - Gain & maintain controls - running software , coughing up shell
+- Run exploit software against target
+
+Reconnaissance types
+-Zero contact - CEH = footprinting , search engines , history website data , directories , people , locational data, dns , isp / ip assignments , hosting services
+google has gps and wireless data , we can find this and be able to know where a certain IP is exactly , talk to the people = not saying hi! , its what do you know about them? to someone else collect that information
+-Low contact - competitive intelligence , partners , vendors , customers
+have to ask if it is ok to talk to these people, not ok to talk to customers but vendors ect is OK , this is low because , INDIRECT
+-High Contact - Scanning = IP address, ports, services Fuzzing = from website , input to public database , random , non-random
+scanning = Find out open ports , IP addresses , what services?
+fuzzing = jam data in and see what happens
+non random data = input value data or testing
+-Vulnerability research
+do you know any weaknesses?
+look to databases = OSVDB.org - Collected a lot of this information - OPEN SOURCE
+we collect this information - the client may stop you at this point
+
+Transition
+Scope -> Plan Reconn Data -> DO ATTACK - Report
+
+Do - Attack
+Apply Exploit - Capture flag or file - identify the password hash - crack password - crack encryption
+couple of different ways , because of config , give me directory , in-scope , progression
+identify password hash - if we can find the hash value of a password and we can pull it back from system , matter of time before we can looking up hash in table
+crack password - find something that WILL work in place of password
+crack encryption - is there a tool to break this AES/DES ITS POSSIBLE!
+
+Apply exploit - normal PENTEST , subscriptions to tool vendors
+
+Free = metasploit
+Build = reverse engineering , shell coding , learn how to break apart software
+Buy = big rumor out there USGOV buys exploits!
+
+This is what we love to do! this is the SCOPE!!
+
+where do we get the tools?
+
+3 vendors 
+metasploit = OPEN
+Canvas =  Immunity
+Core Impact
+
+These have general exploits to apply to system
+
+Metasploit and all the tools
+Dean Said
+-You do not have permission
+-You must ask in writing
+-You must have printed, signed permission
+-You Could go to jail!
+If you don't
+-Search Video metasploit tutorial
+
+In some countries even having the tools is illegal
+Be careful with military or government
+
+why do we call it a pentest?
+the reason we call it a pen test is because you have to put a pen to paper and ask for permission , printed signed!
+
+Transition
+Scope->Plan Reconn Data->Do->Report
+
+Clearly state we've finished testing
+20% of test is report , clearly communicate , effect change
+reporting is not I GOT YOU!!!
+Raw data - output of scan - data files from packet captures
+A map to hack the organization - it should not be
+
+going to a company - have you had a pen test before?
+OH yeah! heres the raw data , report , i'll email it to you in plain text , the password is password!
+PROTECT YOUR DATA! Do not leave this on the server
+
+Reporting Success
+Repeatability - here it is - i've done mine , heres my report , its like an experiment
+-Apply same methodology - get the same results
+-Apply same methodology after fixes - get different results - control in place
+Actionable - i know what i need to do next
+Business understandable - i get it we got a problem with authentication
+
+Example
+When testing 
+We found # of weaknesses in this category
+-Could be ZERO - they've plugged up the holes
+We prove that a failure happened
+-@ date & time
+-See packets n-m nmap - not heres this list , this file is encrypted , we have this as proof
+Business strategies for fixing this are... is this , these things
+More research can be found at... general test
+
+What constitutes proof?
+Screenshots are not proof 
+-they are not actionable - what do we do about this?
+-they do get managements attnetion
+Packet captures are proof - not understandable by business
+but they are also a map to hack
+MUST BE BALANCED IN REPORT FOR TECHNICAL / BUSINESS
+
+Roll it up! CEH style READ PENTESTMAG.COM
+Summary of Phases CEH style
+1. Reconnaissance
+- Prepatory phase
+- Gather as much information as possible
+2. Scanning - pick @ system
+- Dialers
+- Port Scanners
+- Network Mapping
+- Ping Sweeping
+- Vulnerability Scanners
+3. Gaining Access - a lot of chances there is no initial level of access
+- Exploits system
+- Any Layer
+- Influencing factors
+  - Architecture and configuration of target
+  - Skill level of the perpetrator
+  - Initial level of access obtained 
+4. Maintaining Access - dont do it the normal way , put things underneath , migrate from process to process for higher level of privelage
+- Attacker tries to retain 'ownership' of system
+- Will tamper and compromise system
+ - New Accounts
+ - Extra Software
+ - Back Doors
+- Harden System
+ - Patch it for victim - nobody else gets in
+- Owned , rooted , got root - POWNED , OWNING
+5. Covering Tracks - getting paid to sneak around , clear logs 
+- Extend misuse of system without being detected
+- Remove evidence of hacking , avoiding legal action
+- Steganography , tunneling , altering log files - sneak around yet keep control and alert intrusion detection system
+- Start a fresh reconnaissance to another target system
+
+Deliverables = Report
+- Detailed results of testing activity produced
+- Matched against the scope of work - if we did something wrong , don't include it in report
+- Vulnerabilities are detailed 
+- Corrective measures are suggested
+
+Round out module : Computer Crimes and Implications
+- Cyber Security Act 2002
+ - Life sentences for hackers who 'recklessly' endanger the lives of others
+- Computer Crime and Security Survey - anyone who is a customer , must be notified STATE LAW
+ - 90% of respondents acknowledged security breaches
+ - 34% reported the crime
+ - Stigma associated with reporting lapses
+- FBI computer crimes squad estimates - Businesses have already been ATTACKED!
+ - 85 to 97% of intrusions are not detected
+Lets try and figure out what this person has done and clean your systems!
+
+Legal Perspectives (US FEDERAL LAW)
+- 18 USC * 1029 - biggie
+ - Fraud and refuted activity in connection with access devices
+- * 1030 - biggie
+ - Fraud and related activity in connection with computers
+- * 1362 - wires and switches
+ - communication lines, stations , or systems
+- * 2510 - wire tapping 
+ - wired electronic commiunications interception and interception of oral communications
+- * 2701
+ - Stored Wire and electronic communications transactionnel records access
+
+Summary
+- Ethical hacking is a methodology to simulate a malicious attack without causing damage
+- hacking involves 5 phases
+- US statutes 1029 and 1030 primarily address cyber crime
+
+Resources PART 9 - material you need to read - what business are you getting into? I know how to hire a pen tester! DO LABS!
+- http://www.isecom.org/research/osstmm.html
+- http://www.expandingsecurity.com/2012/03/ceh-readings-01/
+- https://www.ee.oulu.fi/research/ouspg/Glossary
+- http://w2.eff.org/Net_culture/Hackers/
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,365 @@
+Module 11: Session Hijacking
+if i had to pick 1 skill to work on it would be THIS
+this requires an interaction between 2 hosts
+if you can take over you WIN
+
+CEH = TCP/IP
+
+we need to look at HTTP
+
+Module Objectives
+-Which layer hijacking?
+-TCP/IP concepts
+ - IPV4
+ - TCP
+-Spoofing vs Hijacking
+-Types of session hijacking
+-Performing sequence prediction
+-Protection / Controls
+TAKE TIME HERE
+
+For Exam = CEH
+-Know your protocol Headers
+ - It cuts away a ton of wrong answers
+-Know your format of attacks
+
+Which layer hijacking?
+-Network
+ - TCP/IP
+-Application
+ - Http Session
+-Let us do both 
+
+Understanding session hijacking
+-Prerequisites
+ - Headers
+ - Layers
+ - Concepts
+-Flow of message packets
+-TCP\IP stack
+-Spoofing attack - impersonation - pretending to be me , i don't have credentials - IM THE PRESIDENT - may or may not have authentication 
+-Hijack attack - confiscation - President walks in, you push him away and say HI! - someone did the authentication for us 
+
+IPV4 Header
+what you will see is 4500 at the beginning of all ipv4 if it was ipv6 it would start with a 6
+manipulate ID/TTL/Protocol
+
+Data Field 
+-Carries user data form next layer up
+-Integer multiple of 8 bits long (octet)
+-Max length of datagram (header plus data) 65,535 octets - HOLY SHIT
+start at IP = we have control , when we send information up the stack we don't care , we have satisfied a certain part
+if i can get you to satisfy a layer and there is obstraction into another layer , we can take advantage of that 
+in IP its unauthenticated 
+in TCP its authenticated but only at Session
+
+TCP & IP interaction
+-Header concept
+ - Abstracts one layer from another
+ - TCP layer - session / stream
+ - IP layer - transmission
+-Session Hijacking
+ - takes advantage of this abstraction 
+i could jump into IP / TCP convo with a different IP and the same stream 
+if i can figure out the Sequence than i can take over IP
+if i can figure out IP than i can take over the sequence
+Tool = Hping 
+
+TCP Header 
+predict SEQ and ACK with different IP = classic technique 
+
+Connection Control
+-Connectionless data transfer - HTTP 
+ - Each PDU treated independently - PDU = Protocol Data Unit = Data - treated as a whole - authentication must be here in some way
+ -datagram
+   - if IP the data has to be somewhere within that packet before we de-encapsulate 
+-Connection-oriented data transfer
+ - virtual circuit - to disturb we need to predict where the conversation is going
+   - TCP layer , pass variables back and forth , figure out sequence , we can take over 
+-Connection-oriented preferred (even required) for lengthy exchange of data - from security aswell
+
+Connection Control.2
+-or if protocol details must be worked out dynamically
+-Logical association, or connection, established between entities - break logic we get control
+-Three phases occur
+  1. Connection Establishment - SYN SYN ACK ACK = TCP
+  2. Data Transfer SYN ACK - Sequence numbers incrementing  = TCP
+  3. Connection Termination FIN ACK FIN ACK = TCP
+    - May be interrupted - restart
+	- Recovery phases to handle errors  - suppose the host gets busy , instead of ACK next packet , take 500 instead of 1000 , give me 0 more and wait , because i am busy
+
+Connection Establishment
+-Entities agreet o exchange data
+-Typically, one station issues connection request
+-Receiving entity accepts or rejects
+-May include negotiation
+-Syntax semantics, and timing
+-Both entities must use same protocol
+-May allow optional features
+-Must be agreed
+  - Protocol may specify max PDU
+  - 1 station may wish to restrict less octets   
+SSL will negotiate other variables , this is our speed , this our data, this is encryption
+syntax , timing , now we go
+if there is different versions you have to backwards face this
+when talking about SSL / TLS connections 
+TLS = newer , if our negotiations , i only speak SSL1 and you speak TLS2 , can you go slower? Prey on backwards compatible
+doesnt work on IPSec with simplex , if you can't communicate on this, we can't communicate
+
+Data Transfer and Termination
+-Both Data and control information exchanged
+-data flow and acknowledgements may be in one or both directions - TCP - since UDP = send and prey 
+-One side may send termination request - when attacking IDS will say RESET on both sides
+   -This is where attacker steps in - work against adversary
+   
+if you don't understand this , you won't make NEW attacks , this makes you creative :) don't just use Hping 
+
+Sequence Numbers
+-Provide reliable communication
+-32-bit counter >4 billion combinations
+-What is the order for reassembly
+-No expectation of size - TCP/IP
+ - IPV6 = Jumbo packet size
+-Attackers must successfully guess the sequence number to hijack a session - whats the flow? guess sequence , jump in 
+
+Sequencing
+-Many conneciton-oriented protocols use sequencing - TCP
+-PDUs numbered sequentially - increment as they go along 
+-Each side keeps track of outgoing and incoming numbers
+-Supports three main functions
+  - Ordered delivery = reassembly
+  - Flow control = size
+  - Error control = failure
+-Include some way of identifying connection - pair IP with Sequence 
+  - Unique connection identifier
+  - Combination of source and destination addresses
+  
+Attacker and Sequence Numbers
+-Must either
+ - Know - IP or sequence - 1 
+ - Force to be known - advance or slow down - 2 
+ - Predict within range - craft packets - i know the next sequence will be 1-100 - i can create 100 packets - send all at once - if hit right , you beat the other guy
+ 
+REMEMBER
+Spoofing
+-Pretend to be another user or machine to gain access
+-Not actively takinga nother user offline to perform the attack 
+Hijacking 
+-Relies on the legitimate user to make a connection and authenticate
+-Then the attacker takes over the session
+-This is the best done after upper layer authentication
+-Tool of choise ettercap
+  - best tool to use on linux - Learn config 
+  - i like this , this goes with Hping 
+  - USE both on Exam
+
+Steps in Session Hijacking
+-Track or Predict connection - Sniff
+-Desynchronize connection (take seq #)
+  - Establish but not transmitting
+  - Reduce data to zero (null) - 1 or 0
+  - Force ACK forward - ok were at 0 or # , now we move 1 at a time , 1-1-1-1-1 0-0-0-0-0-0
+  - Optionally reset session (new seq #) - usually forces re-authentication
+-Attacker injects or receives data - look at ASCII area on Wireshark
+  - Mitnick attack was about receiving 
+  
+INSERT INTENSE FLAG DETAIL HERE
+[IMAGE IN FOLDER OF DIAGRAM] - thishurts
+
+Types of session Hijacking
+-Active = Inject
+ - takes over
+ - to corrupt integrity
+-Passive = Record - collect for next time 
+ - records all of the traffic that is being sent forth
+ - to compromise confidentiality
+ 
+Hijacking or Spoofing?
+-Hijack relies on the legitimate user to connect and authenticate and then take over the session, can you get authentication details?
+-Spoofing is the attacker pretending to be another user or machine to gain access - if you have credentials 
+-Session hijacking can be active or passive 
+Tools = Ettercap or Hping 
+
+SWITCH TO APPLICATION hijacking
+-Thanks Stallings & Idefense
+  - Stallings = god of application hijacking 
+  - Idefense = things forward will be of theirs 
+ 
+Outline
+-What are Session IDs?
+-Security Problems with Session ID's
+-Brute forcing web session ID's
+-Hacked in the Press
+-Examples
+-Common Problems
+
+Web Applications Logins
+- Log in ID and Password for Ebay , Amazon , Yahoo
+
+Traditional Brute Force 
+- Guest - Admin
+- 123123 - Password 
+
+today they use Captcha so that you can't use automated bot 
+
+Session ID Overview
+-State and authentication are different?
+-HTTP is stateless protocol - the tool used is a fiction of authentication , from 1 to the next there is no conversation , we have to create this
+-From a web client server standpoint
+ - How often does a user authenticate?
+ - How do they authenticate? - application is creating token
+ - How do we maintain state?
+    - shared string , token, or secret
+-Authentication data (username/password) is exchanged for "Session ID"
+if you get session ID and its predictable YOU WIN!
+
+Web State Attacks
+-Session Replay
+ - Something recorded and used later
+-Session Hijacking
+ - Seizing control of a legitimate session
+ - Between Client and Server
+ 
+Session ID
+-Session ID should be just as secure as username/password - some examples : ITS NOT 
+-Authentication data is sensitive : sometimes its not!
+-RFC 2964 - if you don't believe look here
+ - (Use of HTTP State Management)
+ 
+Session ID - how do we get one?
+-Generated by
+ -Web Server
+ -Web Application
+-Stored in - transferred in 
+ - cookies
+ - URLs
+ - hidden fields 
+
+Cookie Refresher
+-Cookies are set to expire = to be deleted - developers 
+ - closing the browser "session" or "non-persistent"
+-Persistent cookies last beyond a user's session - attackers 
+ - "Remember Me" option - user friendly - reestablish choices
+ - Stored on the users hard drive
+
+Cookie Refresher RFC 2965
+PARTS OF A COOKIE
+1.) domain: the website domain that created and that can read the variable - stuff
+2.) flag: a TRUE/FALSE value indicating whether all machines within a given domain can access the variable - distributed system with servers needs to have this flag set to TRUE - be one of them!
+3.) path: Pathname of the URL(S) capable of accessing the cookie from the domain - usually /
+4.) secure: a TRUE/FALSE value indicating if an SSL connection with the domain is needed toa ccess the variable - in this case is FALSE
+5.) expiration: number of seconds since Jan 1, 1970 - no idea why 
+     - Omitting signals to store the cookie only in memory
+6.) name: The name of the Session ID variable - JSESSION + SESSION ID
+7.) value: The value of the Session ID variable (in this case 64.3.40.151.16018996349247480). - long string , gives us information back - 64.3.40.151. = IP address , after 151 is the random stuff which is not guessable = Token of person 
+
+EXAMPLES - Which do you like? - image in folder cookieexamples 
+Shorter is better 
+
+URL Stored Session ID - Again pick who? - image in folder urlsessionid
+i like the fake one
+i like evite state
+i like the jsession id
+
+Session Ids in HTML Hidden Fields - image in folder HiddenFields
+defender = very bad
+attacker = very good
+session Id value is in plain-text WOOHOO
+
+An Example: Brute Forcing Session ID's in URLS - image in folder - bruteids
+message to person , this is for you! this is free!
+
+See anything you like? - image = greetings
+defender = random
+attacker = predictable
+
+Now? - image = now
+holds same string unless last 5 digits which are 16,18,20,22,24
+what would be the next increment? 26 and 3 digit number - which you could test the 3 digit numbers
+how long does it take? pretty easy to intercept? take a script 15-20mins
+good = attacker
+bad = defender
+
+Hacked in the Press - image hackedpress
+-"Privacy hole found in verizon wireless web site" Computerworld, sept 6, 2001
+
+Cookie example - Freeservers.com
+Image = cookieexample 
+Base 64 encoding 
+Base 64 decode :
+http://www.securitystats.com/tools/base64.asp
+  testing123.itg.com:1231234
+  username:password - obviscate - not random , hidden 
+you could automate it 
+
+Cookie Example - Freeservers.com
+-Longerway: use the brute forcer on every single cookie character combination 
+ cookie peramiter portion : you can have this randomized for predictability
+
+Use URL AND Cookie for authentication - image = cookieauth 
+if you're attacking , look for short ids
+if its long , will take a long time or session will expire 
+
+what can we look at generically?
+lets prey upon things 
+
+Common Problems
+-Weak Algorithm - RC4 and made it weaker
+-No form of account lock out - captcha is not your friend 
+-Short key space - 10 characters long , we can brute force 
+-Indefinite expiration on Server - don't let these cookies expire , good for ecommerce and attackers 
+-Transmitted in the clear - base64 you win!
+-Insecure retrieval - change my password 
+
+What are defenders doing to stop you?
+What can i do as a user?
+-logout of all sessions
+-Do not "remember me"
+-Ensure you use SSL - worked with accountant , because he said you can put your information here without HTTPS
+-Patch - internal and automated , doesnt protect websites themselves 
+-Treat emails with Session Id info in URL's just as securely as username/password
+
+What can I do as a software vendor?
+-Build and require SSL
+-Cookies enable the "secure" field
+-Provide a logout function 
+-Re-authenticate before critical actions
+-Regenerate the session ID after intervals (30, 15 min.)
+-Create "booby-trapped" session ids to detect brute forcing attempts
+-Auto-expire sessions after # minutes of inactivity
+-Enforce a "nonce" on previous pages - numbers used once 
+-Cryptographically strong enough session ID
+
+Resources
+-http://www.cs.binghamton.edu/~steflik/cs455/sessionhijacking.htm - very specific :D - tools Ettercap and Hping 
+-http://www.expandingsecurity.com/2012/03/readings-ceh-10-session-hijacking/ - lots of material where you can become great and session hijacking
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+   
+  
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+
+ 

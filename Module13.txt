@@ -1,0 +1,201 @@
+Module 13: Hacking Web Applications
+love this
+we get to reach out to a resource that is incredible
+you should've picked your specialty in web servers - maybe the one you are specialized it has aspects others do to
+we are now going up into what everybody does wrong!
+
+Module Objectives
+-Understanding Web Application Security
+-Common Web Application Security Vulnerabilities
+-Web Application Pentration Methodologies
+-Input Manipulation
+-Authentication and session management
+-Countermeasures 
+
+Web Application Security
+how are you protecting web application? firewall.. *looks awkward* ... do you allow port 80? YEAH do you allow port 443? YEAH 
+how is the firewall doing anything? it stops threats on ports that are closed , this will slow things down
+maybe we should look at the programming and see if its vulnerable , naw its solid and good
+can we test? pulls out iphone - gets url and uses tool for 2$ cheap tool detected 300 vulnerabilities
+what are we attacking? what is the adversary attacking? we don't the website, or programming, we want the databases
+attack client attack database compromise web server and use it to deliver malware = evil
+
+Common Web Application Vulnerabilities
+-UNreliability of client-side data
+-Special Characters that have not been escaped
+-HTML Output Character Filtering
+-Lack of User Authentication before performing critical tasks - like resetting passwords , like remember me, unprotected, DIG here
+-OWASP top 10 - OWASP = open web application security project OWASP.org
+
+LAMP - Architecture - image = LAMP
+Linux
+Apache - web server application 
+MySQL - database server 
+PHP - Perl - depends - client interface 
+
+Microsoft - Architecture IIS 6.0 = image IIS6
+currently in 7 
+Microsoft - Architecture IIS 7.0 = image IIS7
+buffer overflows in WAS
+buffer overflows in W3 / WP
+Microsoft - worker process IIS 7.0 = image processIIS7
+when you drill, there are little pieces
+are the elements protected? 
+these are places to attack
+
+ALRIGHT this is the top 10 , where to attack
+
+A1 - Injection - image = A1
+-Defined = commands inserted in the data, interpreted by interpreter - that says SELECT * to receive all 
+-Command interpreters = Perl, OS Shell, LDAP, Xpath..
+-SQL Injection = Web site are connected to databases
+-Impact = Impact availability, confidentiality, integrity 
+
+SQL injection - Illustrated - Image = SQLinject
+1. Application presents form to the attacker
+2. Attacker sends an attack in the form data
+3. Application forwards attack to the database in SQL query
+4. Database runs query containing attack and sends results back to application 
+5. Application sends results to the user 
+"username = blank OR 1 = 1"
+"SELECT * FROM accounts WHERE acct=" OR 1=1--""
+
+Cross-Site Scripting (XSS) = image crossX
+-Defined = evil raw data from attacker is sent to innocent user's browser - here take this , i throw a command in to web server , hey i'd like that page , give me all your stuff
+-Raw data... = link retrieved from valid / trusted web site = Link is a request for data sent directly to the client 
+-Web 2.0 = Everyone posts to everyone else's site = You can not get around it
+-Impact = confidentiality , integrity = attacker may observe and direct all users behavior
+they see your post, the script runs inside of the browser or break out , script could be anything 
+
+Broken Authentication & Session Management - high level = image brokenauth 
+-Defined = convert user name & password to Session ID = If attacker can predict Session ID, they can steal it - is it predictable?
+-Session Management flaws 
+   - Credentials must be appended with every request
+   - SESSION ID is used to track state since HTTP doesn't
+   - SESSION ID is typically exposed
+-Other session entry points = change my password, remember my password, forgot my password, logout, email address, etc....
+-Impact= confidentiality, integrity
+  - Accounts compromised or sessions hijacked
+
+Insecure Direct Object References - find out the important file = image = insecure 
+-Defined = internal files and executables lead to other internal sensitive functions = attacker tampers with parameter value
+-Flaws = listing the 'authorized' objects = hiding the object references
+-Impact = confidentiality = attackers are able to access unauthorized files or data
+ great tool, brute force sub directories
+ 
+Cross Site Request Forgery (CSRF) = image = CSRF
+-Defined = Victim's browser is tricked into issuing a command to a vulnerable web application under attackers control
+-Cause = browsers automatically including user authentication data with each request
+-Automatically Provided Credentials
+   - Session cookie, basic authentication header, IP address
+   - Client side SSL certificates
+   - Windows domain authentication
+-Impact 
+   - confidentiality , integrity
+   - initiate transactions
+   - access sensitive data
+
+Security Misconfiguration - go through all of the steps = image = secmisconfig
+-Defined = Unpatched operating systems and applications are an attack vector
+-Other Code = anything you install is an attack vector
+-Impact = Availability , confidentiality , integrity
+get the security check list , look at OWASP 
+for operating systems you would go to CIsecurity.org
+military =  STIGS 
+test these protections
+
+Insecure Cryptographic Storage - any leak? go for the leak - image = insecurecrypt
+-Defined = Unidentified sensitive data at rest
+-Data = Databases, files, directories, log files, backups...
+-Impact = confidentiality, integrity
+   - expense of cleaning up the incident
+   - sued and/or fined
+classic = Standard in , Standard out = Oracle
+another = log files , error for credit card, goes into an error log , inside in an unprotected event log
+what about the outputs of assets? look here
+
+Failure to Restrict URL Access = image = failurl
+-Defined = If authentication is used on any part of the site and not on all parts of the site
+-A common mistake = Displaying only authorized links and menu choices
+  - Attacker types URL directly
+-Impact = confidentiality
+   - access other user's accounts and data
+   - perform priveleged actions
+
+Insufficient Transport Layer Protection = image = insufftransport 
+-Define = Sensitive data is transmitted in clear - we encrypt when we do authentication but when the client does change in password but they forget SSL on this 
+-SSL & TLS
+  - Server side certificate normal
+  - client side certificates are rare
+  - server to server is possible
+-Impact = confidentiality 
+  - Attackers use data as launching point for further attack 
+
+Unvalidated Redirects and Forwards = image = invalidredirect 
+-Defined = User-supplied parameters (Controlled by the Attacker) in the destination url request data from unauthorized sites
+   - Attacker can send victim to a site of their choice
+-Forwards (Transfer in .NET) = Internally send the request to a new page in the same application
+   - sometimes parameters define the target page
+-Impact = integrity = redirect victim to phising or malware site
+Unvalidated Forwarder = image = Unvalidforward 
+
+Web Application Penetration Methodologies
+-Information gathering and discovery
+ - site map
+ - footprinting & fingerprinting
+ - mirror site
+ - vulnerability scanning
+ - signature error and response codes 
+-File/Application Enumeration
+ - Forced browsing
+ - hidden files - find default files 
+ - Vulnerable CGIs
+ - Sample Files
+-Input/Output Client-side Data Manipulation
+ - SQLinject
+
+Input Minipulation
+-URL manipulation
+-OGI Parameter Tampering
+-HTTP client-header injection
+-Filter/Intrusion detection Evasion
+-Protocol/Method Manipulation
+-Overflows
+
+Authentication and Session Management
+-Brute/Reverse Force
+-Session Hijacking
+-Session Replay
+-Session Forging
+-Page Sequencing
+
+Summary
+-Attacking web applications
+-Web application vulnerability can be reduced with proper design and coding practices
+-Do not trust client-side data
+-A cross-site scripting vulnerability is caused by the failure to validate user supplied input
+
+LOOK AT OWASP
+excellent Lab = OWASP.org and look for webgoat , which is a punching bag , walks you through top 10 of OWASP 
+4-10 hours with this 
+Do this! hackme.org but out of business 
+
+
+
+   
+ https://myactivity.google.com/delete-activity?authuser=0&hl=en == delete activity 
+   
+
+
+
+  
+
+ 
+
+
+
+
+
+
+
+

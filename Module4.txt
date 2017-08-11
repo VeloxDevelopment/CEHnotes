@@ -1,0 +1,281 @@
+Module 4: Enumeration
+
+you know what host you're going after
+you know the services they are offering up
+we are going to dig deeper
+
+Objective
+- Enumeration 
+- Null Session
+- NetBIOS
+- SNMP
+- DNS
+- Active Directory
+- SMTP
+- NTP
+
+What is enumeration?
+-To list from start to finish - please! - this is what it means , usually Numbered , this is item 1-2 or this is item N
+-Typically a database - some databases have 1 entry , some have a lot!
+-Requires active connections to systems - you will be found out unless you are very careful and very slow
+ - Lightning Raid - We go in we grab that file and that will be it , we won't come back for months at a time , is this ok with customer
+-It is a directed query - be specific what we are capturing
+-Data gained
+ - Network resources and shares
+ - Users and groups
+ - Applications and banners
+  -Show: - this is enumeration!!
+   - Users
+   - Groups
+   - Network resources
+   - Shares
+   - Applications (you) have!
+   
+NetBIOS null sessions do not work!
+but you have to know about them
+some other tools or way will allow you to expose information like a connection stream
+
+Net Bios Null Sessions
+-You can establish a Null Session with a Windows host by logging on with a null user name and password
+ - Access to a session with no username!
+-Information from the host:
+   - We are not talking about active directory authentication or curberos here we're talking about local users and group accounts
+ - List of users and groups
+ - List of mac addresses - network card
+ - List of shares - even if you don't have permission of the shares
+ - Users and hosts SIDs (Security identifiers) - CROWN JEWELS!
+
+ If you know how it works , how can i apply this in a new way?
+ They will ask you on test! Still around on some boxes!
+ 
+How to get a null session
+-Open Ports
+ - UDP 137 & 138, TCP 139
+ - TCP 445
+- net use \\host\IPC$ "" /u: - issued command for creating a share 
+
+host could = IP address
+IPC = inter process communication 
+$ = Hidden share = So this is the share that is listed on ALL machines that are speaking Net Bios and are open on ports
+"" = not giving any information
+/u: username is! This is show me what anybody could see if they were looking at the IPC$
+This is how you establish a Null Session
+
+null sessions are not nearly as useful today and not nearly as prevelent BUT TRY if there is a windows XP or windows 2000 host still out there
+ - Because someone left one there TAKE A POKE
+ - you might be surprised what is out there
+ 
+Null Session Countermeasure
+-Upgrade to XP or 2k3
+-Block access to TCP 139 and/ or TCP 445 ports at edge of network
+ - Collect data internally and then package it up and send it to yourself
+-Disable SMB services SMB = Server message block - depends on environment
+-Edit registry to restrict the anonymous user - some boxes require a valid name and password to go with \\host\IPC$ "" /u:
+
+Lets go beyond windows and reach out to a service available on almost all networking tools that are out there
+
+SNMP components
+-(1) SNMP- Simple Network Management Protocol
+ - Application-layer protocol for managing TCP/IP based networks
+ - Port UDP 161 & 162 - authentication could be spoofed if we intercept
+ - Current version 3, with Security - the security is not very robust for reasons we'll get too
+ - http://www.rfc-editor.org/rfc/rfc3410.txt
+-(2) NMS - Network Management Station
+ - Device that polls/queries SNMP agent - says Hey router how you doin? Hey switch how you doin? Hey computer how you doin? How you doin x10
+ - Can be a computer - USUALLY A COMPUTER - Rolls up this data for tillemetry or operating activities
+-(3) SNMP Agent
+ - Internetworking device (e.g. Router or Switch) running software that understands SNMP
+  - Installed on device that is reporting
+  - Theres tons of software that use this that you can enable/disable on machines
+-(4) MIB = Management Information Base
+  - Structure of all the data in all the databases that conforms across all networking devices - Pretty Amazing
+  - You need to know the structure of MIB 
+  - Standard to create your own MIBs - Companies who build this stuff would do it, not you
+  - You can Look up all of this
+ - Database of info conforming to SMI
+-(5) SMI Structure of Management Information
+ - Standard that defines how to create MIB
+ 
+MIB v2 - Management Information Base
+-Object IDentifier (OID) - Serial Number - Very Specific
+ - This is subdivision subdivision subdivision
+-Example .1.3.6.1.2.1.1 - Standard MIB most people are used too
+ -iso(1) org(3) dod(6) internet(1)
+   mgmt  (2)
+       mib-2(1)
+	      system(1)
+		  
+iso = everything
+org = everything
+dod = originally created for the military or Department of Defense
+You will always see .1.3.6.1 its a LOCK
+ - Beyond this 1-2-3-4 is the current branches of the MIB
+mgmt (2) = management 
+mib-2 (1) = management version 2
+system (1) = all the little pieces below = devices, network cards, Router (dig down)
+Router - has certain interface , lets say it has a 10mb-100mb-1g-giggy Port - this has a number associated with it
+within the port there will be further details 
+ - throughput on the network card
+ - Error rate of the network card
+ - Config info
+ - Reporting activity
+How fast is SNMP going? How fast is error? Is there any fault with it? is there anything reporting back to me?
+config on a query on a regular basis , are things running just fine? we can get really detailed about config info
+
+Now Think!
+If you were able to query these devices and find out what kind of network card it was, did it have a lot of errors?
+ - you can gather a lot of data that you could then use
+Now it goes further
+not only is it a query system
+
+SNMP commands
+ - From an attacker stand point
+  - I want you to change your configuration 
+  - I can control the config
+  - Use to gain access or something inappropriate
+  - Maybe shut down the interface with DoS
+-Get
+-GetNext
+-Set
+-Trap
+
+^ These pull data on a regular basis
+
+SNMP Enumeration
+-Why is it so easy?
+ - Devices don't do complex authentication
+  - if they do, it costs CPU cycles
+ -SNMP manager is not designed for multi-user security
+  - You can brute force password attack - relatively easy , these devices dont defend themselves , you can't have a lock out on your router - theoretically you can
+Metadata of this process is good for reporting data
+Its job is to Route 
+Its gotta be quick and efficient
+
+SNMP Enumeration
+-Community string - by default is named Public
+  - If you have sniffer you can see it - if it is not Public it will announce itself and say I am something else (stuff, thing, private)
+- Password
+  - Brute Force - of specific community string
+  
+what do good guys do to protect themselves against this?
+they need SNMP operational
+
+SNMP enumeration countermeasures
+-Block 161 & 162 UDP to OR from Internet
+-Tune IDS to listen - hey someone is trying to change SNMP 
+-Remove the SNMP agent - could disable on device but operational that is bad
+-Change the default "public" community name - if someone is listening they can hear it
+-On Windows Group
+ - Additional restrictions for anonymous connections
+-Upgrade to SNMP v3 - best thing because it is more complex or robust 
+You gotta be on the local subnet or in control of the firewall or have access
+Go after a small asset , capture it and then start shooting SNMP out or listening to SNMP traffic - to avoid countermeasures
+
+FAVORITE THING TO ENUMERATE - GIVES RICH Data = DNS
+-Zone transfer - all records
+ - (nslookup, is -d <domainname>)
+ - Enumerate interesting network information
+-You don't need to zone transfer
+ - Query will work - individual basis but make it easy for yourself
+-External DNS data
+ - WWW, SMTP, SOA
+ - Reasonable
+-Internal DNS data - if windows and someone is really populating there DNS active directory  
+ - Authenticator , Domain
+ - Bad Idea
+
+Windows DNS Zone transfer
+- For clients to locate DNS SRV records - SRV = Server 
+- An attacker would look at the following records closely:
+ - Global Catalog service (_gc._tcp_)
+ - Domain Controllers (_Idap._tcp)
+ - Kerberos Authentication {_kerberos._tcp) or (_kerberos._tcp) curly bracket was a mistake?
+this gives us a more accurate picture of the target
+
+Blocking DNS Zone transfer
+- You can easily block zone transfers using the DNS
+- Add DNS security options
+ - No internet resolution
+get an asset from the outside - some device and have it go in THEN query 
+
+Active Directory Enumeration
+- All the existing users and groups could be enumerated witha  simple LDAP query
+- The only thing required to perform this enumeration is to create an authenticated session via LDAP
+- connect to any AD server using idp.exe port 389
+- Authenticate yourself using Guest or any domain account
+-Data
+ - Users, Computer, any object in AD
+With DNS and LDAP you can go at it with two different directions
+download AD server and look what can be populated there IT COULD BE EVERYTHING
+
+how do you connect?
+
+How to do AD enumeration
+1. Ldp.exe tool
+2. Click options , click General, type 9999 in the Page Size box
+3. click OK
+4. Click Connection, and then click Bind
+5. On the Browse menu, click Search.
+6. Paste the value of the schemaNamingContext into the Base DN box
+7. Paste the following filter into the filter Box:
+(&(objectCategory=attributeSchema)
+(isMemberOfPartialAttributeSet=TRUE)) 
+OR
+(&(objectCategory=attributeSchema)(isMemberOfPartialAttributeSet=TRUE)) = give me anything thats got populated data in it 
+8. Under Scope click Subtree
+9. Click Options 
+10. Type attributes that you want = object class and name - coniacle name distinguished name 
+11. Click ok
+This will give you a list of all the users in the Domain , access server - use port - use account - you get in you WIN 
+You can definitely get all of the usernames - from there someone has got to be using Password as their password something simple
+ - using only the alphabet with no numbers or upper case and lower case letters
+ - guessing these simple password is what narrows down the 28^2 of upper case , lower case , and the infinity of numbers 
+Schema is the design of the database , you gotta know a little bit about this 
+
+AD enumeration countermeasures
+-The Win 2k dcpromo
+ - option 2 during AD installation - which locks down guest access or anon authentication , get another account and you'll be ok 
+-Block 389
+-Require 3389 on LDAP server - will only flow through certain ports 
+All you need is a couple of tools and a low level account 
+
+How about looking at Email?
+don't know an account? try something
+
+SMTP enumeration
+  - Go on the website of the organization and look up the names within their organization 
+  - Find an email address , find the format of the email addresses 
+  - Send an email to someone
+-Take me to your email
+-Fuzzing works well
+-Or just look up the contacts
+-Matching naming conventions
+
+what do you have?
+access to the information on their site
+you're giving a user active data which you can use for control
+
+NTP Enumeration
+-Time server
+-Not much except that you keep good time
+what this means is that they need a timing mechanism
+if they have NTP = windows AD = large AD organization because they need the NTP server to make sure replication stays correct
+just tells you they have some other tools in house that might rely on it 
+
+Summary
+- Enumeration involves active connections to systems and directed queries
+- The type of information enumerated by intruders includes network resources and states, users and groups and applications and banners
+- Null sessions are used often by attackers to connect to target systems.
+
+Good guys block , we go deeper , we have user accounts , time to do password cracking 
+
+Resources
+- http://support.microsoft.com/kb/230663
+-SNMP
+ - http://ireasoning.com/mibbrowser.shtml
+ - http://www.dpstele.com/layers/l2/snmp_tutorials.php - Wonderful!
+
+
+
+
+

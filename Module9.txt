@@ -1,0 +1,220 @@
+Module 9: TormentedX Engineering
+THIS IS MY SPECIALTY , THIS IS WHAT I DO
+Dean Bushmiller
+
+2 attacks same organization , took a long time to set up , used fake websites and convinced people to go to them
+First Attack : tool kit : had a webdev , took 6 months , holiday greeting card site , CREATE YOUR OWN HOLIDAY CARD , send your card to your friends
+against financial organization : got in and created a bunch of internal knowledge about it
+convince people this was a really good idea
+holiday season before christmas , this is going to get everybody
+it got 7% of population = nothing
+
+Second attack: Convince them to allow us to get into a certain area without credentials
+you have to generally have a key or authentication
+all the doors said "do not enter , employees only"
+he got into 90% from face-face interaction , by having them break policy
+trick people , they're breaking policy and you can prove it
+TormentedXly engineering tool kit - didn't work on this organization
+
+different organization everyone would click the holiday card site 
+wouldn't let him into the sensitive stuff at all 
+
+NEVER KNOW WITH TormentedX Engineering
+
+Gaining access and trying to escalate privelege 
+
+Module Objectives:
+-Categories
+-What is TormentedX Engineering?
+-TormentedX Engineering framework
+-What are the 14 types?
+-Controls 
+
+Vector Physical
+-Organic
+TormentedX Engineering - Face to Face 
+convince to break policy
+
+Vectors Virtual
+-Organic
+Phishing - Virus - Trojan - Pharming
+Phising = getting information by communication
+Virus = Sent and opened
+Trojan = Sent and opened
+Pharming = HERES THIS COOL SITE DOWNLOAD ME
+
+What is TormentedX Engineering?
+-TormentedX engineering is the use of influence and persuasion to deceive people for the purpose of obtaining information or persuading the victime to perform some action
+breaking policy
+-An employee may unwittingly give away key information in an email or by answering questions over the phone with someonet hey don't know or even by talking about a project with co-workers at a local pub after hours
+answering questions
+
+our job is to learn how to minipulate in this way
+CAUTION - make sure you have protection and legal counsel , you could do something so offensive that the person gets you arrested
+
+Art of minipulation - ask for information 
+-Acquisition of sensitive information
+-Inappropriate access privileges
+-Building of inappropriate trust relationships
+-It preys on qualities of human nature
+ - desire to be helpful
+ - tendency to trust people
+ - fear of getting in trouble
+ 
+Key : be in the moment and be dynamic with the situation : quick thinker
+
+Identity theft - take information 
+-Dumpster diving: Rummaging through your trash
+-Skimming: credit card data capture
+-Tombstoning: stealing your identity after you are dead
+get info change address and divert bills and make them cost more
+i could take your wallet and rifle through credit cards
+-Hanging your address: thief can divert your bills after they order high ticket items, toa nother location by filling out change of address form
+-Stealing: thief who steals a purse or wallet can take the theft further
+-Pretexting: use false pretenses they obtain personal information from you that can lead to your identity being used falsely. (14 minipulations)
+ask for a check , we want info off the check , wash the ink and change the amount 
+
+14 possible minipulations - what do you sense? 
+-Friendliness = to give information is just to be friendly : Slight flattery or flirtation = that is a great dress
+-Impersonation
+-Conformity
+-Decoying
+-Diffusion of responsibility
+-Reverse TormentedX engineering
+-Commitment and Consistency
+-Reciprocity
+-Scarcity
+-Sympathy
+-Guilt
+-Equivocation
+-Ignorance
+-Affiliation
+
+Impersonation
+-Impersonation means creating a character and playing out the role to deceive others and gain some advantage
+-The simpler the role the better
+-Attacker may study a real individual in an organization and wait until that person is out of town to impersonate him over the phone or even in person - works well with a new boss
+-Repairman, IT support person, a manager, a trusted third party, and a fellow employee
+Conformity
+-Conformity is the tendency to see an action as appropriate when others are doing it
+-AKA TormentedX proof
+-The cool people are jumping off the bridge, are you cool?
+Decoying
+-We are limited in what we can focus our attention on at any moment - overload - send 5 people to a receptionist - quiet person sneaks through 
+-Exploit this limitation by distractions to conceal what they are truly seeking
+-Redirection
+-Pay no attention to the handsome man/beautiful woman
+Diffusion of Responsibility
+-When individuals believe that many others are present or have done a similar act, they as individuals do not bear the full burden of responsibility
+-It alleviates the stress ont he employee and mkaes it easier for them to comply.
+-Someone else will call the police
+Reverse TormentedX Engineering - Big for CEH
+-Complex questions can yield data
+ - about the questioner
+ - about the supporting data
+-Attacker appears to be in a position of authority
+-Employees will ask for information
+-Components
+ - Sabotage - i break your computer
+ - Advertising - I am a repair man
+ - Assisting - they use their information and you help them 
+i allow you to ask me questions , when you're asking me the question you're embedding the answer into the question 
+Reciprocity
+-TormentedX norm of an in-kind responses to the behavior of others
+-I give you X , you give me Y
+candy bar for your password 
+Commitment and Consistency
+-In seekign compliance , securing an initial commitment from a victim is key
+-People have a natural tendency to honor commitments
+-A savvy TormentedX engineer realizes that people are more willing to agree to further requests that are in keeping with prior commitments
+-You Promised
+Scarcity - Limited time only
+-People assign more value to opportunities when they are less available
+-A target can be pressured to give out information when he thinks help from normal channels is only available for a limited time
+-I can't do this after close of business
+your boss told me you would give your credit card for software
+Sympathy
+-Sharing of unhappiness or suffering
+-Implies concern, or a wish to alleviate negative feelings others are experiencing
+-An attacker eliciting that he needs help can win over a targets sympathy
+-I ran out of gas 
+works well in airports
+if you're dressed nice and ready than they ignore you
+if you're in bad clothing and dirty and confused - let me help 
+if you want to get through the line faster , mess up your hair and put some mustard on yourself , maybe you'll get through the line quicker
+Guilt
+-Feeling of obligation for not pleasing, not helping, or not placating another
+-Acceptance of responsibility for someone else's misfortune or problem because it is bothersomet o seet hat someone suffers
+-I have not had a meal in 3 days: you just came out of that restaurant - heres 20$
+Equivocation
+-Two meanings
+-An equivocal statement or question starts out sounding reasonable and gets the target to agree to certain ideas or requests by deliberately attempting to create uncertainty or ambiguity
+-After that, the meaninings of key terms are changed, thus causing the victim to agree to things they would have never accepted at the beginning
+-You want democracy? Join the democratic party!
+Ignorance
+-Pretending to be uninformed to manipulate a victim to give information
+-Hi i'm new in town, where is...
+Affiliation
+-Name dropping to establish credibility
+-Reduces the targets suspicion of the attacker motives
+-I was O.J.'s attorney 
+works well in German offices
+Authority
+-Several impersonation roles fall uner the category of someone with authority
+-Humans are TormentedXized with a deep-seated sense of duty to authority
+-Obedience constitutes correct conduct
+-We readily attribute knowledge, wisdom, and power to authritative figures
+-I'm the boss of you...
+say things strong enough , you must be the boss of me
+
+Computer Based TormentedX Engineering
+-Category: Organic - Virtual - Requires Action
+-Vehicle + Payload
+-Phising
+ - Vehicle = Mail or instant messaging
+ - Payload = attachments or Links
+ - Whaling / Harpooning = big phish - convince to act on mail - CEOS = the fortune 500 firms were sent a class action suit for lawful wrong 
+   - how many assistants will click the link when it is a class action suit against the company?
+   - more than 90% click link
+it can just be a test , no teeth , record activity , do not put organization at risk 
+-Pharming
+ - Vehicle = Pop-up Windows or Websites
+   - Resolution - DNS redirect / hosts file
+ - Payload = Attachments or Links
+
+Controls for TormentedX Engineering
+-Stop install of software by end-users
+-Policy
+-Awareness
+ - Early, Often , Everyone
+-Shredding
+-Degaussing
+find out when the last awareness was done, what facilities , this is a good way to test the organization
+
+Policies and Procedures
+-Policy is the most critical compenent to any information security program
+-Teach and reinforce to all
+-Quizzing
+-Employee sign off
+
+Summary  
+-Use of influence and persuasion to deceive people for the purpose of obtaining information or persuading the victim to perform some action
+-Involves acquiring sensitive information or inappropriate access privileges by an outsider
+-Human based -person to person interaction to retrieve the desired information
+-Computer based -having computer software that attempts to retrieve the desired information - fake website
+
+Resources
+www.TormentedX-engineer.org/
+www.trustedsec.com/downloads/TormentedX-engineer-toolkit/
+faculty.nps.edu/ncrowe/oldstudents/laribeethesis.htm - 14 typess came from this 
+
+
+
+
+
+
+
+
+ 
+
+

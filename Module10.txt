@@ -1,0 +1,246 @@
+Module 10: Sniffing
+i smell packets!
+
+this could be reconn
+this could be gaining access - smelling clear text passwords
+more information is a good thing
+
+Module Objectives - Wireshark - CEH used
+-Overview of Sniffers
+-Understanding Sniffers from a cracker perspective
+-Comprehending Active and Passive Sniffing
+-ARP Spoofing and Redirection - Dark Side
+-DNS and IP Sniffing and Spoofing - Dark Side
+-HTTPS Sniffing
+-Illustration of various tools used in the above context
+
+Sniffers - An Introduction
+-Requirements
+ - Promiscuous mode NIC - network card listening to all packets - bytes come to card , mac , this frame flows across - ill take everything that comes my way
+ - Software Program or Hardware device - 2 options : Broadcast Frame = i'll take it Directed to my Mac Network address - I'll take it 
+   - we use wireshark - Fluke = single device
+-Monitor Network - listening
+ - At any layer - layer 2 - examine further
+ - Raw HEX or resolved and translated - easier to read
+-Not intercepting or altering - lets be clear - catch packets
+
+Security Concern
+-Clear text data is everywhere
+-CIFS/SMB, Telnet, POP3, HTTP and FTP transmite login passwords in clear text
+-If i can run a sniffer, so can you and everyone else
+
+Steven Northcut from SANDS organization = you should be reading it in HEX and understand it that way 
+then you'd spend all the time doing the translations in your head
+why not read it in a form that works for me? interface translate
+what happens if the interface is corrupt
+99.9% the interface is going to translate correct , can't be worried about the .01
+you can learn hex? i don't just want to do security
+you would go blind if you looked at this stuff all day long
+
+Reading Packets - Wireshark
+-Hex
+-ASCII
+-Interpreted/Translated
+-Interfaces make it easy and abstract
+-Or you could go blind looking at it all day 
+New tool = CloudShark = Browser Base
+
+Wireshark (and WinPcap)
+-Wireshark - Application for Sniffing Packets
+-WinPcap - Open source library for packet capture - give me the data 
+-Operating System - Windows & Unix/Linux
+-Network Card Drivers - Ethernet/WiFi Card
+if you are in monitor mode you can't capture packets , must be promiscuous 
+windows = Tcpsys - convinced to give frames - intercepted 
+
+Gotta know how to write filters
+1. Command Menu
+2. Display Filter
+3. List of Captured Packets
+4. Details of selected packet header
+5. Packet content in hexadecimal and ASCII - Raw
+
+Buffer size is not a big deal unless you have a massive stream 
+Capture Filter = differentiate packet flow - sparingly 
+Capture Files = split files
+Particular Time to pull
+
+Busy Network = deselect , could chew up space
+
+Rules of Wireshark
+-Capture as close to the complaining user/device as possible
+-Know how to capture the packets before you need to
+ - spanning vs tapping and WLAN capture options
+-Use capture filters sparingly
+-Use display filters liberally
+-Customize profiles , coloring rules, filters
+-Build a HOT trace file library - set of trace tools you can filter from - notepad or interface 
+-The packets never lie - but they will not tell why something is happening - you have to know why Evil = cleartext pw or Recording to prove this is what we did and how we did it
+go to laurel chapelle - LEARN THISS
+
+Key Tasks
+-Capturing Wired/Wireless Traffic
+-Using Profiles
+-Hot Capture Filters
+-Hot Display Filters
+-Using Coloring Rules
+-Finding Problems Using Graphs
+-Using the Wireshark Expert
+
+Wireless Traffic Capture
+-You must have a promiscuous and monitor mode adapter
+-Check out AirPcap Adapters
+AlphaCards and Portable - USB based - can be used in Virtual Machine
+
+Wireless Driver Issue
+http://wiki.wireshark.org/CaptureSetup/WLAN
+Backtrack - wireless section or deans site
+
+If you want to do packet injection wirelessly you cannot use a Microsoft based system , only Linux or Mac
+
+Passive Sniffing 
+-Got Hub? - ethernet cables
+-Got Tap?
+
+Active Sniffing
+-Switches fore the attackers to be malicious
+ - ARP spoofing
+ - MAC flooding
+ - MAC duplication
+-Really noisy from IDS perspective
+
+How does a switch work? - LAYER 2
+-Seperates collision domains
+ - Not broadcast domains
+-Makes decisions based upon MAC
+ - Not IP address
+- Table of addresses
+ - MAC is on this segment - port
+-Not very smart
+ - will take any new data
+ 
+Port Spanning or Mirroring 
+go to switch and say all the traffic should be copied to over here
+span individual ports
+
+Full Duplex Link
+tap goes inbetween source and destination
+PASSIVE = if you lose power , there is no loss , this device fails and keeps port open
+Cisco = CCNA = communicate with these people
+Juniper = communicate with these people
+
+Custom Profiles:
+you need these 
+
+Capture Filters:
+IMAGE on folder
+
+Capture Filter/Display Filter = can do same things in both
+Capture Filter = be careful
+
+Hot Capture Filters
+-host 10.2.1.3 - GOOD
+-Port 67 (TCP or UDP) - isolate traffic to port - GOOD
+-Tcp port 80 - web traffic - GOOD
+-Ether host 00:08:15:00:08:15 (My MAC address) - this station
+-Not ether host 00:08:15:00:08:15 (not me) - not to this station = Good One = i don't want to be included - GOOD
+-wlan host 00:2A:4B:23:36:2A = anything on wireless card 
+
+Hot Display Filters
+-ip.addr == 10.2.0.0/16 - /16 = span
+-!ip.addr == 10.2.0.0/16 (don't use !=) - not this ip address or this range 
+-tcp.analysis.flags - flag system , XMAS attack
+-wlan.fc.type_subtype ==8 (beacons only) - specific
+-http.response.code >399 (HTTP errors)
+-ftp.response.arg == "login incorrect" - this would tell you , people are trying to brute force the server 
+host display filters are an excellent tool , filter on and off
+
+Use Color Rules
+Consider disabling Checksum errors
+
+check the expert 
+
+LETS GO Evil
+
+how can we abuse MAC data?
+
+What does a computer do with MAC data?
+-Local ARP cache table
+  - Life of entry 600 seconds
+  - List of MAC to IP
+-Build a local list of data to find other hosts
+  - Host can be computers or routers
+-How can we mess with that?
+
+ARP Spoofing - Vic = victim Att = Attacker
+-Convince a Vic. to send traffic to Att.
+1. Att: Configure IP forwarding
+2. Att: Send fake ARP response to VIC 
+  - Goal - re-map default router IP to attackers MAC
+3. Vic: sends traffic destined for outside world based on poisoned ARP table entry
+4. Att: Sniff the traffic from the link
+5. Att: Packets are forwarded to the true default roueter for delivery to the outside world 
+
+Control for ARP spoofing
+-Switch MAC filtering
+-IDS at switch level
+-Fixed addresses in client - static ARP routing is there - Dangerous
+-None of this is good 
+
+Sniffing Encrypted
+-SSL & SSH
+  - using trusted certificates and public keys
+-Asymmetric encryption
+ - Private/Public key
+ - For transmission of session key
+-Symmetric encryption
+ - Session key to encrypt all data
+-Problem is trust certificates and public keys
+
+Man in the middle attack
+we pretend good guy wants to go to the bank
+redirect through me
+intercept the request for bank.com and offer a certificate
+2 different encryptions and we have the key by sending certificate 
+
+DNS Sniffing and Spoofing
+-DNS (FQDN) => Routable IP by SOA - spoof being the SOA
+-Fully Qualified Domain Name to IP address resolution by Start of Authority SOA
+-Spoofing - not by SOA
+-Poison a cache - spoof given to requestor or intermediate 
+
+Summary
+-Sniffer captures the traffic of a network
+-Sniffer used to view logins and passwords
+-Sniffer can be active or passive
+-Popular attack methods include man in the middle attack and session hijacking
+-To view traffic on switched networks
+ - MAC flooding
+ - ARP spoofing 
+ 
+Resources
+-www.wiresharktraining.com
+  - TIPS
+-www.iana.org
+  - Protocol Numbers
+-www.ietf.org
+  - the RFCs
+-www.wiresharkbook.com
+  - videos/traces
+-www.pcapr.net
+  - lots of trace files
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+

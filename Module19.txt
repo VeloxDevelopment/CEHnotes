@@ -1,0 +1,377 @@
+Module 19: Penetration Testing
+this is a business, talking to your customers
+dont be a test taker -> click monkey
+LEARN THE TOOLS -> Metasploit -> does full circle
+Bolt to other tools for Reconn, NMAP+NESSUS
+
+Overview
+-How would you find a good map?
+-How does Metasploit fit penetration testing?
+-What are basic parts?
+
+Disclaimer
+-Want to do jail time?
+-Want to get fired?
+-This set of tools will make the above most possible!
+-Don't even download it if-
+ - Don't have permission on corporate assets
+ - Don't have written permission to run it
+ - Don't have contract with authority
+
+Introducing Metasploit
+-An advanced open-source exploit research and development framework
+-Http://metasploit.com
+-Current stable version: 3.6 with 860 exploits
+-Written in Ruby
+-Runs best on Linux
+-Versions
+ - Free: Framework
+ - Paid: Pro
+
+How do I get it?
+-Build up a virutal linux host : Kali<3
+-Install from metasploit.com
+-Update the files
+-Or pull fully loaded images
+-BackTrack or OWASP WTE (GET IT)
+
+Doneinmetasploit
+export Nmap files as XML
+
+Basic Exploit Steps
+-Scan for IP & Port using what? -Nmap or Maltego
+-Start Metasploit
+ - Choose exploit based on host
+ - Select a payload & parameters
+ - You are in
+-Can it really be that easy?
+ - You can make it as complicated as you want
+
+An exploit
+-An attack on a vulnerability of sofware
+-May or may not generate an event
+-Software is not programmed to recover from this event
+-Result:
+ - Sysetm spots functioning correctly
+ - Someone else is in control
+
+When does this become critical?
+-If there is a known vulnerability
+ - O.S. or application
+-Is there a written exploit?
+ - Zero day or make it yourself (shell coding)
+ - Widely available > 2 downloads
+-Is there a patch/update for the vulnerability?
+-Then Metasploit might have an exploit
+
+Why would you do this?
+-Penetration Testing
+-If the bad guys have it and are using it
+-We should use it on ourselves first
+-Now we know we are weak
+-Let us bring it to management's attention
+-Let them prioritize
+-Let us patch
+ 
+Interfaces - how do we interact
+-Msfcli - one shell at a time, learning
+-Msfweb - phased out
+-Msfconsole - centralized console - hardcore
+
+msfconsole
+-Way to access most of the features within Metasploit
+ - Alternates: Rapid 7 or Armitage
+-Provides a console-based interface to the framework
+-Contains the most features and is most stable MSF interface
+-Full readline support, tabbing, and command completion
+-Execution of external commands in msfconsole is possible
+-Runs on Windows as of MSF version 3.3
+
+Exploits categories
+-Active exploits
+ - Target specific host, run until completion, and then exit.
+ - Brute-force modules will exit when a shell opens on victim
+ - Module execution stops if an error is encountered
+-Passive exploits - Social Engineer Toolkit
+ - Wait for incoming hosts and exploit them as they connect
+ - Focus on clients such as web browsers, FTP clients, email.
+
+Active Example = images = Activeexample + activeexample2
+
+You need passive - let you go have lunch!
+-You are a busy person
+-You cannot be waiting around for users
+-You really need many consoles running
+ - That's why we use msfconsole
+-Passive exploits support the waiting around while you...
+ - Do the rest of the penetration test
+
+Understanding Payloads in Msf
+-We want command control (maintain)
+-Accomplished witht he help of a payload
+-Payload is a sequence of code that is executed whent he vulnerability is triggered
+-EXPLOIT = Vulnerability + Payload
+-Written in Assembly Language
+-Platform and OS dependent
+ - A Win32 payload will not work in Linux
+ -(even if we are exploiting the same bug)
+-Different payload types do different tasks
+ - Exec - Execute a command or program on the remote system
+ - download_exec - Download a file from a URL and execute
+ - upload_exec - Upload a local file and execute
+ - adduser - Add userto system accounts
+ - And....
+- Most common payload is shellcodes or aka shell payloads
+ - Interactive shell that can be used to control the system remotely
+ - The term is inherited from Unix /bin/sh
+ - for Window command prompt cmd.exe
+-Types of shell payloads
+ - Bind Shells
+  - A socket is created, a port is bound to it and when a connection is established to it, it will spawn a shell.
+ - Reverse Shells
+  - Instead of creating a listening socket, a connection is created to a predefined IP and Port and a shell is then shoveled to the Attacker
+
+3 Payload module types
+-Singles - self-contained and completely standalone
+ - adding a user to the target system
+-Stagers - setup a network connection between the attacker and victim
+ - Designed to be small and reliable
+ - Multiple similar stagers happen
+ - Metasploit will use the best one when it can
+ - Default is now NX + Win7 compatible
+-Stages - Payload components that are downloaded by Stagers modules
+ - Payload stages automatically use 'middle stagers'
+ - A single recv() fails with large payloads
+ - The stager receives the middle stager
+ - The middle stager then performs a full download
+ - Better for RWX
+
+What is Meterpreter?
+-Just another payload...
+-Advance, dynamically extensible payload
+-Uses in-memory DLL injection stagers -Oh $h!+
+-Extended over the network at runtime
+-Communicates over the stager socket
+-Provides a comprehensive client-side Ruby API
+
+What do you get from Meterpreter?
+-New features are added by loading extensions
+ - I want to run a custom DLL that the victim doesn't have
+-From your MSF machine
+ - client uploads the DLL over the socket
+-ON victim
+ - server running ont he victim
+ - loads the DLL in-memory
+ - Initializes it
+ - new extension registers itself with the server
+-From your MSF machine (The client on the attacker's machine)
+ - loads the local extension API
+ - can now call the extensions functions of custom DLL
+ Process is seamless and takes approximately 1 second to complete 
+
+What else from Meterpreter?
+-Run post/windows/manage/migrate
+-getsystem - h = escalation to system
+-getuid = whoami
+
+meterpreter can give us all this extra stuff - AMAZING
+can't get it ALL done with meterpreter
+
+Auxiliary Modules
+-Framework includes hundred of auxiliary modules
+-Perform scanning, fuzzing, sniffing, etc.
+-Will not give you a shell
+-Valuable when conduction a pentration test 
+
+Migration of a process, Why?
+-You have gotten in.
+-What you have done may look suspicious
+-You may make the machine seam sluggish by being int he users process space with the user
+-The user may exit the browsers
+-You are in, move to a more difficult place to detect- like SVChost = maintain control
+
+We want to be
+-Stable across reboots
+-Escalate privileges
+
+One last module
+-Browser Autopwnc by Egypt
+-Performs browser fingerprinting
+ - Prior to launching exploits
+-If the remote PC is using internet explorer 6, it will not launch IE7 exploits 
+Noisy!
+
+We need a Database framework
+-Dradis
+ - Store your results for quick resource
+ - Share your data with your team
+ - Assist with writing final report
+ - Communicating over SSL
+ - Import Nmap and Nessus result
+
+Dradis in Backtrack - Kali<3
+-How do you get it?
+ - apt-get install dradis
+ - cd/pentest/misc/dradis/server
+ - ruby ./script/server
+
+You still need a database
+-Metasploit supports
+ - MYSQL
+ - PostgreSQL
+-We need to tell Metasploit to use the database driver
+ - From msfconsole
+ - msf > db_driver mysql
+
+How do i extend Metasploit?
+-Learn Ruby
+-Learn Shellcoding
+-Study operating system flaws
+-Write your own exploits 
+Reverse Engineering - You win!
+
+Plan Vs Report = image = planvsreport
+
+Planning
+-Contract, Contact, Permission
+ - Attackers - Go to jail
+ - Penetration testers - go to bank
+ - Authorization - to operate
+ - Contact - think of it like a meeting
+  - you need to know whom to call on both sides
+-Requires
+ - Scope - When, How long, Who, What
+
+Report
+-Collect the data as you proceed
+ - Packet trace everything
+ - Never turn on your attack machines
+  - Until the trace is on
+-Do it with automation - pull data from nessus, maltego, nmap, metasploit, wireshark - encrypt, 15-20 page report for business meeting
+ - Technologists hate writing reports
+ - Make it easy
+-Roll up to
+ - Operations
+  - Actionable items
+ - Management
+  - Abstractions that make sense
+
+Summary
+-Learn or watch it
+-Use it as part of your penetration testing
+metasploit.com -> learn and spend all of your time here 
+
+Resources
+-www.offensive-security.com/metasploit-unleashed
+-Video
+ - tools.securitytube.net
+ - Metasploit Megaprimer Series - get you started the best!
+-isecom.securenetltd.com/osstmm.en.2.2.pdf - current version = 3
+-csrc.nist.gov/publications/nistpubs/800-115/SP800-115.pdf - when government types 
+PENTEST MAGAZINE
+
+Business Process! = businessprocess
+
+Reality Check
+-Any methodology must be tailored
+-Per project basis
+-Per Scope
+-Anyone with great system is not telling
+
+Generic or Specific
+-Everyone outside knows the generic
+ - Relate to what they already know
+ - Transition to what they don't know
+ - Make it easy on new people
+-Specific
+ - Repeatability increases speed
+
+PMBOK Phases
+-Project Management Body of Knowledge
+-Initiating
+ - Defines and authorizes project
+-Planning
+ - Shapes outcomes/goals
+-Executing
+ - Carries out a plan
+-Controlling and Monitoring
+ - Matches planned to acutal outcomes
+ - Makes corrective actions
+-Closing
+ - Obtains a formal acceptance by stakeholders = sign off
+ - tapers out project activities in a planned, organized fashion
+
+PMBOK Processes
+-Inputs - tools & techniques
+ - documents, plans, designs
+-Tools and Techniques
+ - Mechanisms applied to inputs
+-Outputs
+ - documents, products
+ 
+1hr meeting or less, be organized
+
+PMBOK resources
+-Fee 15$ - 60-70$
+ - http://www.projectconnections.com/templates/pmbok/knowledge-area/
+ - http://www.pmi.org
+-Free
+ - http://en.wikibooks.org/wiki/Project_Management/PMBOK - not version 5
+ 
+ISSAF = image = issaf
+-Information System Security Assessment Framework
+-Early
+-Planning and Preparation
+-Assessment
+-Reporting, Clean-up, and Destroy Artifacts
+-http://www.oissg.org/issaf
+
+OSSTMM v3 = i like this, repeatability
+-Open Source Security Testing Methodology Manual
+-Rules of Engagement
+-Channels
+-Modules
+-http://www.isecom.org/osstmm/
+-Risk Assesment Values - RAV
+-http://www.isecom.org/research/ravs.shtml
+-Peer-Reviewed
+-Popular
+-Templates
+-Assessments at a high-level
+-Addresses unique technology
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+WINK, Work with this company!!
+
+Build a Lab
+don't spend anymore than 250$ it will expire
+EC Council Ilabs 
+
+Build your own lab
+
+Lab step overview
+-Step 01 Install locally unzip
+-Step 02 - Install Virtual Box <---- this for budget , 3 different folder structures  1:(listener: Wireshark) 2:(attacker:Kali(Backtrack), OWASP web testing environment) 3: (Controls: Virtual firewall/IDS, ViattaFirewall, Snort--->Razorback) + Routing and Switching
+-Step 03 - Create Lab folder structure
+-Step 04 - find and build victim images - single server, single client, build up these operating systems yourself, know defaults, where do you get the software? convienent subscription: technet, Oracle,
+ - windows patched and unpatched
+ - linux old and new
+ - OWASP webgoat
+-Step 05 - Build Backtrac Attack image
+ - step 06 - set network interfaces
+ - step 07 - install to disk
+ - step 08 - NOTE one interface at a time
+-Step 09 - Test connections
+-Step 10 - Turn on victim, listener, attacker 
+ - Capture packets in listener and email them to me!
+  - HE WILL HELP YOU AS LONG AS YOU PROVIDE REAL PACKETS WITH A GIVEN OPERATING SYSTEM AND NETWORK
+  - Dean.Bushmiller@expandingsecurity.com
+
+
+
+
+
+
+  
+
+
+

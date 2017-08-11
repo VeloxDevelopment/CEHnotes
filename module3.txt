@@ -1,0 +1,275 @@
+Module 3: Scanning Networks
+
+In footprinting we talked about scanning
+we talked about finding an ip address range
+Range ---- web server here
+what else is out there?
+what is the destination?
+once we figure out where the hosts are, we ask the company if its in scope
+what type of host?
+
+Detail - Where are we?
+still in reconn
+
+Module Objectives :
+-Detect live systems
+-discover services running / listening
+-understanding port scanning
+-identifying tcp and udp services
+-Discovering the operating system 
+-Active and passive fingerprinting 
+
+Detecting 'Live' WIRED systems? - where they are , why they are
+- Detecting 'Live' WIRED systems on a network target, Why?
+- Determine the perimeter of the network - where are the firewall resources?
+- Facilitate network mapping - this is what we can see from the outside , this is what we see from the inside
+- Inventory accessible systems on target network - catalog all information gathered
+
+Recon: Port Scanning
+-Scanning = Reconnaissance
+-Most popular reconn technique
+-Can be client or server - still services - SQL slammer attack , administrator port was open on servers VISIO = underlying database , remotely manage sql on client, succeptable to attack
+-Target computer runs many 'services' 
+ - listen at 'well known' 'ports' 
+-Which ports are available on the target - whats the software running behind that? what version? what vulnerabilities? how will we attack
+ - Potential Vulnerabilities
+
+Levels of Scanning
+-Host
+ - Modem = Telephone Number - still to this day exist , scan if its in the scope! Dial the number or use HackersChoice , what service? 
+  - how do you find the group of phone numbers? you take from the footprinting , shows phone number and fax number on business website! look there , may look at DNS from whois , phone numbers there RANGES
+  - identify and do not go any deeper, are these yours? <- to business , Get Approval!
+  - Recon: Tel: War Dialers
+   - Tool used to scan a large pool of telephone numbers
+   - detects vulnerable modems
+   - Provides access to the system - may!
+  - Recon: Tel: Demon Dialer
+   - Tool used to monitor a specific phone number
+   - Target its modem to gain access - picking to find out this information
+ - Network card = IP address = ICMP - Use Ping or pingsweep tool
+-Service = UDP/TCP Port - are you talking? is there an open port?
+-Version = Unique pattern of response - ok you're a web server , what version of the OS are you running? what software are you running? Vulnerability Mapping , stop here , Poking!
+
+
+We did the phones ^ now lets do the network! the IP / TCP
+Recon: IP: PING
+- Is the computer on? - im an active machine , we know about this , what about above and below , is it Class A , B , C , Class A = 16million IP addresses you dont want to do this , narrow your scope
+- ICMP Echo Request Packet?
+- ICMP Echo Reply Message from an active machine!
+- Why not a whole range of IP addresses?
+ - Ping Sweep
+- ICMP reply can be more than just YES
+
+Why is it called ping? submarines ping and echo - ECHO location
+Mike Moose wrote original program of PING 
+
+Recon: IP: ICMP type/code
+http://www.iana.org/assignments/icmp-parameters
+Nice long list! KNOW IT
+
+PING sweeps are noisy! - 1 at a time , do different sweeps! Windows XP service pack 1/2 these hosts will not respond anymore , could be a filter!
+Recon: IP: Detecting Ping Sweeps
+- Ping sweeps form a basic step in network mapping
+- Polling IP address ranges
+- They are noisy from a IDS's view
+- Don't have an IDS?
+ - Firewalls do just fine
+ 
+ ICMP says im here! we want to get to underlying service to attack! and find the vulnerability
+ 
+ Recon: TCP three-way handshake
+Client Host = connection request (SYN = 1, seq=client_isn) --> Server Host = connection granted (SYN=1 seq=server_isn, ack = client_isn+1) --> client host(2) = ack (SYN=0, seq=cleint_isn+1, ack = server_isn+1) --> server host
+ALL is measured in time going down , the client has LESS time than server
+inbetween these exchanges are vulnerabilities
+
+Client = i would like to talk to you , sends SYN , ON = 1 
+Server = this is bidimensional communication , ACK SYN message
+Send both ACK SYN to get ACK = ACK FIN
+PORT IS OPEN!
+
+There is other information we can get from server
+Sequences start at certain numbers , certain servers say my TTL is 35 - 114 - 32
+Learning about the host
+
+We can do a variety of scans
+-Open = SYN scan - We'll send SYN to ports IF response = open
+-Half- Open - says ok im only going to send a portion of a packet
+-Xmas - all lights on light a christmas tree , all Flags , besides RST = reset , certain hosts respond certain ways
+-Stealth(idle) - bring in another host , what are your updates? are you transferring a lot or are you slow?
+-Decoy - really interesting , i want to test you but i don't want you to know im testing you , mask IP , IP is unauthenticated , pretend to be someone else
+ - send information to you!
+ - attacking
+ - Look up good IP addresses to use
+ - Bad people use D-Shield lists to find IPS
+ - Use these
+
+Recon: UDP/TCP
+-No connection - no three way handshake
+-Send UDP with no data = host drop
+-Response
+ - ICMP error = closed (port unreachable)
+ - Nothing = open or filtered = firewall
+ - Nothing is good recon - there is a firewall there!
+ 
+How are you going to scan a network?
+ping sweep , port sweep , ping scan , port scan
+
+Tool: NMap (Network Mapper)
+-Can find OS aswell
+-2 different types , Command line version = YOU NEED TO KNOW , before this think Zenmap = Graphical Version
+-It shows you the command you are choosing based on config
+-Host details and other details that are important to use or Report
+-Look at output and you WIN 
+-Custom scan and name it under a profile and you WIN
+-Sort it by host or service , or OS
+-Excellent tool
+Exam stand point
+-Gotta know all switches and what ports mean
+-what a -S is and a -PA
+-Spend 1-4 hours with NMAP
+-need to know combinations
+-know combinations other people have created! - elegant scans and profiles people have created
+-NMAP.org - Learn what the community is doing - moving forward on a regular basis
+- Input - Output Output - Input Configs/Profiles
+-NESSUS - Vulnerability scanning
+- Output of NMAP is good to show people what we've done and switches used
+- Output with a variety of formats
+- Use XML , and place in Excel
+- Little pieces and put them in seperate files
+- Linux has easy way of doing this
+- Divide it by hosts
+ - we're looking at 60 wordpress servers on UNIX - this person gets those hosts
+ - Active Directory Servers - This goes to there
+DATA IN NICE NEAT CHUNKS - DONT TAKE ONE HUGE LIST it'll take forever and won't be easy to show the client
+
+Nmap command sampler - CASE COUNTS - HAVE TO KNOW CASE
+-h Nmap help
+-sS TCP SYN scan
+-sT TCP connect() scan
+-sU UDP port scans
+-v Verbose output
+-vv Very Verbose output
+-O detect operating system (TCP/IP fingerprinting)
+-sV Service version detection
+-P0 don't ping, just scan
+-A Agressive; as of right now this does the same thing as -O -sV
+-T Paranoid|Sneaky|Polite|Normal|Aggressive|Insane
+-p Choose your ports (scan all ports with 0-65535)
+-F Fast Scan:Scans only ports in the nmap-services files
+-n Don't do reverse DNS lookup
+
+65,000 hosts , carve it into chunks , you're getting paid for hours or days
+
+Active Stack Fingerprinting - what are the unique characterists of the system with the response given
+- Determine the remote OS
+- Attacker leaves smaller footprint
+- OS vendors implement TCP stack differently
+- Attacker sends crafted packets
+- Target response
+- Compared response with a database
+- match = good guess
+MAPPING - verify guesses
+
+Passive fingerprinting
+- Less accurate than active
+- Packet captures
+- Listening to network
+- Victim has nothing to detect
+- P0F2 - Passive Fingerprinting version 2
+These two hosts are talking back and forth and this looks like this
+we now have to rely on less accurate data
+if we're inside as the fake adversarie , it doesn know that we're there! thats why we would use passive
+
+So you think you know Kung Fu?
+- Most of these fingerprinting tools talk
+- You want to hear them
+- You set up firewall and intrusion detection
+- You think you know
+ - where attacker is coming from?
+They are listening! they know where you are coming from! this is a battle, not trundling along
+come from different locations
+don't use a coffee shop , illegal and bad
+
+Triple over-build
+3 different IPS 3 Different ISPs to be used at any time - that may not be good enough!
+work with other pentesters , i'd like to use your IP , can i terminal into a machine on your side
+don't compromise a host here and there to cover tracks
+do this in a white hat way , legal way
+do this so you know Kung Fu
+
+Defense
+-Could victim not answer?
+ - Block (firewall)
+-Could victim answer many ways?
+ - .htm .asp .php .txt (fuzzing)
+- if you get 1 response php and another asp , what kind of host is this?
+- Fuzz the return to mess with you
+- Mangle = Linux = Twist packets in a certain order so they can't figure out who you are
+- Confirm everything , defenses could be fooling you
+
+I told you to find some IPs so that the good guys don't know where you are coming from
+this may not be good enough
+use other tools
+figure out things to hop through hosts
+
+What is SOCKS v5?
+-Firewall systems act as application layer-gateways
+-Client / Server applications need to talk - allows us to bypass a firewall , inside or outside
+-A framework for applications protocols to transparently and securely traverse a firewall
+-Why?
+ - Target doesnt know where attacker is
+ 
+ lets say i have your laptop from company network , you leave for a coffee shop with the laptop sit down and i attack it and you take it back in
+ SOCKS is a form of proxy , passes data , can install software or certain activites
+ compromise host
+ 
+SocksChain
+-A program that allows to connect to any internet service through a chain of SOCKS or HTTP proxies to hide the actual IP address
+if we break a link , there is no traceability back to the source
+
+Proxy Servers
+-A network computer that can serve as an intermediate for connection with other computers
+-Good and bad guys can use them
+ - as firewall - filter
+ - as IP-addresses multiplexer - AKA NAT/PAT PAT = port address translation NAT = Network Address Translation
+ - to anonymize web surfing - nobody knows
+ - to filter unwanted content - no you can't go to inappropriate sites , do your work
+
+ Anonymizers = Proxy server - protect privacy of person , 1000's out there
+-Web surfing anonymizer
+-First anonymizer developed was anonymizer.com, created in 1997 by Lance Cottrell, from COTSE
+he is loosely with Cult of the Swimming Elephant
+
+Bypassing Firewall using Httptunnel
+-Just another proxy
+-Layering games
+abstraction - moving up and down OSI stack - wasn't designed for this
+
+HTTPort
+-proxy to get around a proxy
+-HTTPort allows you to bypass an HTTP proxy, which is blocking you from the internet
+
+If you've captured an asset inside a company and need to get back out but its blocking you , use this 
+
+Summary
+- War Dialing = phone line
+ - THC war dialer
+ - Phone sweep
+-Scanning to discover more about a network
+ - SYN, FIN, connect, ACK, RFC, Inverse Mapping, FTP Bounce, Idle Host
+-Subvert a standard
+ - HTTPort, HTTP tunneling, using proxies, SOCKS chains and anonymizers
+
+List of resources :
+Look at RFC1928
+Look at ICMP parameters
+if you need THC there it is
+
+ 
+
+ 
+
+
+
+ 
+

@@ -1,0 +1,266 @@
+Module 12: Web Server Hacking 
+past 11 domains have taught us 
+what kind of web servers do you want to hack?
+windows - linux - Nginx 
+
+WINDOWS 
+
+Module Objectives
+-Web Server Concept
+-Client Server
+-Apache Web Server
+-IIS Server
+-Attacks against Web Servers
+
+this is different than modules later where web application itself , and the database behind it 
+
+Popular Web Servers
+-Apache
+-IIS
+-Google - not rellevant to CEG
+-Nginx - not rellevant to CEH
+
+How generic web servers work
+-The browser breaks the URL into three parts:
+  1. The Protocol (HTTP)
+  2. The server name (www.website.com) - all we have to type is this
+  3. The filename (webpage.html) - whatever it will be - what is default page if you the wrong filename?
+-The browser communicates with a name server, which translates the server name, www.website.com into an IP address
+  processed in background then re-resolved in browser window
+-The browser then forms a connection to the Web server at that IP address on port 80
+-Following the HTTP protocol, the browser sends a GET request to the server, asking for the file http://webpage.html
+-The server sends the HTML text for web page to the browser - delivery
+-The browser reads the HTML tags and formats the page onto the screen - HTML version does not matter 
+ when you look at ports , 8080 = admin in a lot of cases , there are different ports for this , to GET
+
+How can we be specific? - image = specificweb
+don't squint , be specific yet general , pick IIS or Linux and DIG
+ 
+Apache - image = Apache
+-Intercepts HTTP protocol , bases actions on RFC 1413, goes through picks up main/http config/request and core , rolls data together and brings back to client
+- HTTP protocol . c - can be protected , only other c programs can speak to this c program - armored servers will prevent you from these files
+
+Ahh Sharepoint = image Sharepoint 
+-if you want to hack webservers , learn everything you can about microsoft IIS and about microsoft Sharepoint 
+-Sharepoint = Fancy - being pushed out for fortune 1000 or global 50 
+-if you know how this works , administration , and weakness, job security for CEH
+-Bolt on for IIS
+-Tool
+
+Client Server Strategies - Pick 1 or 2
+-CGI (Common Gateway Interface)
+-MS Active Server Pages (ASP)
+-Personal Home Pages (PHP)
+-Cold Fusion - plenty of it out there
+-Java Servlets and JSP
+
+CGI = Common Gateway Interface
+-Program run by webs erver in response to client request
+-perl,C,C++,VB,Java,python, tcl- could be any 
+-handles submitted HTML forms data and dynamically creates a web page in real time and returns it to the requesting client - pull the things together 
+-Old Technology; pre-HTTP, rooted in gopher
+-reliable
+
+IIS tutorial
+-If you do not know how it works-
+-How are you going to break it?
+-http://learn.iis.net
+  - LOTS OF READING TO DO
+amazing portal which is elegant - great place for learning basics of IIS 
+
+How IIS 7.0 works differently to 6.0 and lesser than versions 
+-Responsibilities
+ - listening for requests made to the server
+ - managing processes
+ - reading configuration files - same as 6.0 but still different 
+-Components
+ - Protocol listeners, such as HTTP.sys
+ - Services, such as WWW service
+ -Windows Process Activation Service (WAS)
+    - LOOK IT UP
+	
+CGI (more) = image CGImore
+
+Microsoft Core technologies
+-Internet Information Server
+-Internet Explorer
+-SQL Server & Access
+-VBScript - Attack - vulnerable 
+-Java <3
+-ActiveX - Attack - custom = laziness
+-DCOM - Distributed component object modeling 
+
+Microsoft ASP architecture
+image = ASParch
+
+Active Server Page Technologies = ASP
+-HTML pages that appear to be database aware
+-HTML with an embedded scripting language and either CGI or proprietary server support are used to make forms objects appear to be database aware
+-Main contenders:
+ - PHP (Open Source)
+ -Microsoft Active Server Pages (OEM Product)
+ - Cold Fusion (OEM Product)
+ - Java Server Pages (Open licensing from Sun)
+ remember you can blend these technologies , most people do not
+ 
+PHP (Personal Home Pages)
+-Core Technologies - programming
+ - HTML
+ - PHP Script
+ - JavaScript
+-Platforms
+ - Primarily LINUX, Apache
+ - Windows 
+ - UNIX
+-Databases
+ - Primarily used with MySQL (Open Source)
+ - Oracle, DB2 (MyODBC Open Source Database Driver)
+
+PHP (typical) Architecture
+= image PHParch
+client = HTML/JavaScript -> Apache Web -> PHP CGI database -> MySQL DB
+
+Cold Fusion - Dean cold fusion? nobody uses that ;)
+-dean has a friend in Lotus Notes Programming also in OS2 Warp servers 
+-Every year his friend doubles his price for services on the above 
+-fewer and fewer customers and those customers need him more and more = scarcity 
+-If your an expert in cold fusion, keep it , you are RARE 
+
+-Core Technologies
+ - Proprietary, tag based, embedded scripting language
+ - Javascript, Java
+-Databases
+ - Access, MS SQL Server
+ - Sybase, Oracle, DB2
+ - MySQL
+-Platforms
+ - NT, LINUX, Solaris
+ - Apache, Netscape/iPlanet, IIS
+-Cold Fusion Architecture = image ColdFusionArch
+ Looks almost the same as PHP - only difference is ODBC-JDBC-Native between database and ColdFusion Server 
+- HTML/JavaScript/Java -> Web Server -> Cold Fusion Server -> ODBC-JDBC-Native -> Database 
+
+Java Servlets
+-Core Technologies
+ - Java
+ - HTML, Javascript
+-Databases
+ - all JDBC enabled (DB2, Oracle, Sybase, Informix)
+-Platforms
+ - NT, LINUX, Solaris
+ - Apache/Tomcat, Netscape/iPlanet, JRun
+idea here is servlet cache which makes things easier to distribute
+
+Java Servlet Architecture = image JavaServarch
+-HTML/JavaScript -> ServletCache + Web Server with servlet engine & JRE -> Database
+this allows Javabeans , JRE = Java run time environment, or called the JAR
+
+What is a JSP
+-Combination of HTML, JavaScript, and a set of Java tags
+  - Java tags allow java code and calls to javabeans to be embedded in line
+  - Java tags also allow control of the Java runtime environment
+
+CVE = IMPORTANT KNOW THIS
+-Common Vulnerabilities and Exposures
+-http://cve.mitre.org/ - most renowned and has some political cache to it , bigger than OSVDB 
+-http://osvdb.org/ - like the DB on the end = database - on my side i want databases of the assets client wants pentested, I collect my information from NESSUS,NMAP,Metasploit
+    - this is the software and the hardware and the programming they have
+	- then query OSVDB and its tells me about vulnerabilities 
+	- pull copy down to yourself and query locally on your machine 
+	- i have a list of all of the vulnerabilities of the host i am testing against
+	- pull new copies and compare from OSVDB
+	- another thing about this is it respects all of the other vulnerability databases out there including CVE 
+	- If you went there and typed in PHP you would get a HUGE list - amazing list of vulnerabilities
+	- Vulnerability analysis 
+	- all the databases use a scoring system
+USE SOMETHING TO CATALOG ALL FLAWS OUT THERE
+
+CVSSv2 - image = CVSSv2
+-Common Vulnerability Scoring System
+-http://first.org/cvss/cvss-guide.html
+-Access Vector = How do we get to it
+-Access Complexity = How tough is it to get in
+-Authentication = what kind of authentication is required
+-Confidentiality
+-Integrity
+-Availability 
+this all totalled for a difficulty
+catalog this for software on a system 
+this gives an idea or focus of where you'll start to attack
+
+Apache Vulnerability
+-Apache current version 2.2
+-Http://httpd.apache.org/security/vulnerabilities_22.html
+-Latest
+ - Timeout detection flaw (mod_proxy_http) - problem -
+ - CVE-2010-2068 - mitre database 
+-Highest
+ - CVE-2008-2025 : score 4.3 - anything over 3.5 you should be worried for the organization
+   - look for the vulnerability code and apply it to asset
+IIS ISAPI DLL Buffer Overflow
+-Buffer Overflow
+-in 2001
+ - Code Red and Nimda worms - attacked against the buffer overflow - high scoring 
+
+IPP Printer Overflow
+-Printing from the Internet?
+-GET /NULL.printer HTTP/1.0 HOST:[buffer]
+this allowed access to the webserver or being able to corrupt it
+
+IIS Directory Traversal
+-Path Traversal
+-"dot-dot-slash(../)" - known as 
+-Access files and directories that are stored outside the web root folder
+ - application source code
+ - configuration and critical system files
+-Attacker looks for absolute links to files stored on the web server
+-Limited by permissions
+if you went CMD and typed in cd../cd.. it would move you up directories - this is traversing
+this allowed you to get to win directory and access to win.exe - allowing remote command shell on the web server or all web servers - this was known as RainForestPuppy
+this allows a person to DIG inside and outside of a machine or Database 
+theres this company called adobe and they use adobeconnect which dean uses for a lot of live classes , which is succeptable to this type of vulnerability
+when we learn about these classic flaws , you learn how to be ready for the next one
+try this against everything , this is nothing more than a hammer or nails on your toolbelt
+
+Unicode
+-Another way to say the same thing
+-Every character in every language
+-ASCII characters for dots are replaced with hexadecimal equivalent (%2E)
+-Could you say.. a different way?
+you can say the same thing over and over in a different way , and the machine will read the translations
+
+IIS Logs
+-IIS logs all the visits in log files. The log file is located at <%systemroot%>\logfiles
+-Collect it all
+-Synchronize your clocks
+-Continuity
+-Integrity
+-Review them 
+
+Unspecified Executable Path Vulnerability
+-When executables and DLL files are not preceded by a path in the registry
+-Windows NT 4.0/2000 will search for the file in the following locations in this order:
+ - Current directory of the application loaded
+ - Current directory of the parent process
+ - ..\system32
+ - ..\system
+ - ..\windows, \winnt
+ - PATH environment variable
+sniff this , see their logs/traffic
+
+Resources
+-Pick the web server you want to be an expert in = Cold Fusion 
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+

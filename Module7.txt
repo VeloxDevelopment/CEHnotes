@@ -1,0 +1,286 @@
+Module 7: Viruses and Worms
+
+you should think we should not play with these
+gotta look at this as if we're a pen tester and they are already compromised with a virus
+
+Module Objectives
+-Chernobyl
+-Explore Zip
+-I love you
+-Melissa
+-Pretty Park
+-Code Red Worm
+-Klez
+-BugBear
+                            -Malware parts
+							-Malware Types
+							-Time Line
+							-Malware of note
+							-Current malware
+							-Anti-Virus software
+KNOW THESE Types
+in the CEH class they teach malware and dean is against it
+great AV
+anytime you're creating a virus you're creating harm
+nowhere besides lab , do this 
+
+Malware components
+-Insertion - getting on computer - end user interaction
+-Avoidance - Hide - protect itself
+-Eradication - cover tracks - how to we remove it
+-Propagation - replication - how - today they don't go over 1 channel , may email , may open ports 
+-Trigger - causes initiation of payload - click & install
+-Payload - what is delivered - usually the self-replicating or collecting data
+Where did the malware come from?
+
+Types of Malware
+-Virus - user initiated
+-Worm - service / server vulnerability - not user - vulnerability in server or service 
+-Trojan - Overt & Covert actions - heres cool game , heres software underneath
+-Logic Bomb - time or condition to start - TRUE - April Fools Jokes
+-Blended Threat - multi-vector attack - wrap these things together - these are targeting audience or software , custom adversarie
+
+when were you born? 1996
+Timeline of Malware 1966-92
+-1966 - first thought
+  -John von Neumann "Theory of self-reproducing automata"
+-1971 - Proof of concept
+ - Creeper by Bob Thomas - first virus
+-1983 - Language
+  -'Virus' is coined by Frederick Cohen
+-1986 - platform dependant
+  - Brain - first IBM PC compatible virus
+-1989 - multi-vector attack
+  - Ghostball - first multipartite virus - different kinds of virus not multi-vector
+-1992 - hysteria
+  - Michelangelo - was expected to create a digital apocalypse - DIDNT
+-1995 - Macro virus
+  - Concept
+-1996 - polymorphic virus hey this is me :)
+  - Ply
+-1999 - email as a delivery vector
+  - Happy and Melissa
+-1999 - damage from payload - first harmful - crossover
+  - Explorer.zip
+-2000 - address book attack - went after outlook
+  - LoveLetter / I love you
+-2001 - web server malware
+  - Code Red
+-2003 database server malware
+  - SQL slammer
+-2003 - anti-worm remove blaster and patch
+  -Welchia(Nachi) - to remove blaster
+-2004 - webworm or php
+  - Santy
+-2007 - botnet herder
+  - Storm - designed to actually command and control
+-2009 - directed target
+  - Dozor
+-2010 - trojan / logic bomb based on patch initiation
+  - BSoD
+  THIS MALWARE WILL COME BACK
+  "oh this macro is good , lets create a whole new database of scripts for it"
+  MAKE MORE AND MORE AVAILABILITY
+  NEXT COOL TOOL SOMEONE WILL TAKE ADVANTAGE OF IT WITH MALWARE
+Motivation for creation
+-Hacking - to see if its possible
+-Fame - not here 
+-Fortune - dollars are today's motivation
+-Cause - oh crap - will not rest until they get what they want - tougher , they will not stop
+
+why learn the history?
+because this teaches us creativity as a pentester
+something new is coming out and we say ok well how would an attacker abuse that
+your job is to do the normal things and then with creativity to make up something new to show what the attackers will do
+so the organization can be more vigilant
+DO SOMETHING NEW FOR PROTECTION
+learn from history for creativity
+Historical Malware
+-Why do we care?
+-Those that forget history are doomed to repeat it, over and over and over...
+
+Chernobyl
+-Name(s): W95.CIH /Chernobyl
+-Discovered june 1, 1998
+-Type: Virus
+-Systems effected: 95, 98, Me
+-CIH is a destructive virus with a payload that destroys data. On april 26,1999, the payload triggered for the first time, causing many computer users to lose their data.
+-Infects the 32-bit Windows 95/98/NT executable files, but can function only under Windows 95/98 and Me
+Explore.Zip
+-Name(s):I-Worm.ZippedFiles Win32/ExploreZip.Worm W32/ExploreZip@MM
+-Discovered: June 6, 1999
+-Type: Worm Email
+-Systems Affected: 2000, 95, 98, Me, NT, XP
+-Infection Length: 210,432 bytes
+KEY WAS byte signature was a specific length , AV was specific
+-Worm.ExploreZip is a worm that contains a malicious payload.
+-replying to unread messages in your inbox
+-email attachment is Zipped_files.exe
+-searches mapped drives and networked computers for Windows installations. If found, it copies itself to the \Windows folder of the remote computer and then modifies the Win.ini file of the infected computer.
+-body of email message will read
+  - "I received your email and i shall send you a reply ASAP. Till then, take a look at the attached Zipped docs."
+LoveLetter subject:"I love you"
+-Name(s): Lovebug, I-worm.LoveLetter, VBS/LoveLetter.A, VBS/LoveLet-A
+-Discovered: May 5, 2000
+-Type: worm email
+-Systems Affected: 2000,95,98,Me,NT,XP
+-82 variants of this worm - multiple vectors - adjust it in ways to avoid AV
+-Love Letter is a Win32-based e-mail worm.
+-It overwrites certain files on your hard drive(s) and sends itself out of to everyone in your Microsoft Outlook address book.
+-LoveLetter arrives as an email attachment named: LOVE-LETTER-FOR-yOU.TXT.VBS
+
+SQL Slammer - only against Windows? no - anything with an underlying SQL server - or VISIO
+-Name(S): SQL Slammer Worm [ISS], DDOS.SQLP1434.A [Trend], W32/SQLSlammer, Slammer Sapphire, W32/SQLSSlam-A
+-Discovered: January 24, 2003
+-Type: Worm
+-Systems Affected: 2000,95,98,Me,NT,XP
+-Targets the systems running Microsoft SQL Server 2000, as well as Microsoft Desktop Engine (MSDE) 2000.
+-The worms sends 376 bytes to UDP port 1434, the SQL Server Resolution Port
+-The worm has the unintended payload of performing a Denial of Service attack due tot he large number of packets it sends
+-CVE References: CAN-2002-0649
+CLOSE port 1434
+sprays packets - looking from Storm/Sands you could see the activity rise 
+Melissa
+-Name(s):W97M.Mailissa
+-Discovered: March 26, 1999
+-Type: Macro
+-Systems Affected: 2000, 95, 98, Me, NT, XP
+-Word 97 macro virus that has a payload to email itself using MS Outlook
+-Subject of e-mail is "Important Message from USERNAME" - took variable from user and populated into the message 
+-Through macros, the virus alters the Microsoft Outlook email program so that the virus gets sent the first 50 people in each address book.
+-Arrives as an email attachment
+  - The body of the message reads: Here's the document you asked for,..don't show anyone else :-)
+Pretty Park
+-Name: Trojan Horse, W32.PrettyPark, Trojan.PSW.CHV, CHV, W32/Pretty.worm.unp, l-Worm.PrettyPark, W32/Pretty.gen@MM, W32/Pretty[Sophos], WORM_PRETTYPARK
+-Discovered: May 28, 1999
+-Type: Worm
+-Systems Affected: 95, 98, Me
+-It also tries to connect to an IRC server and join a specific IRC channel. The worm sends information to IRC every 30 seconds to keep itself connected, and to retrieve any commands from the IRC channel.
+connected to IRC servers
+BugBear
+-Name(S):W32.Bugbear.K@mm
+  - Variant W32.Bugbear.B@mm and W32.Bugbear.E@mm
+-Discovered: June 26, 2004
+-Type: Worm, Virus
+-Systems Affected: 2000,95,98,Me,NT,Server 2003,XP
+-A mass-mailing worm that lso spreads through network shares
+-Polymorphic and also infects .exe files - first Poly = did the same thing in a different way to avoid AV signatures 
+-Possesses keylogging capabilities
+
+next in our history is Cleans , where blended threats were coming to the forefront 
+
+Klez
+-Discovered: October 25, 2001
+-Name(S): W32.Poverty.A@mm, W32.Klez.gen@MM
+-Type: Worm / Virus Payload / Logic Bomb Payload
+-Systems Affected: All Windows with Outlook
+-W32.Klez.A@mm is a mass-mailing email worm. It attempts to copy itself into folder on both local and network drives.
+-The worm exploits a vulnerability in Microsoft Outlook and Outlook Express in an attempt to execute itself when you open or even preview the message.
+-Information and a patch for the vulnerability can be found at 
+  - http://www.microsoft.com/technet/security/bulletin/MS01-020.asp
+-The worm also inserts the virus W32.ElKern.3326. W32.ElKern.3326 can also infect W32.Klex.A@mm.
+-Finally, the worm executes its payload ont he 13th of January, March, May, July, September, and November. The payload causes files on the local and mapped drives to become zero bytes in size.
+was a logic bomb aswell
+
+Sircam
+-Name(S): W32/SirCam@mm, Backdoor.SirCam, l-Worm.Sircam.a, WORM_SIRCAM.A, W32/Sircam-A@mm
+-Discovered: July 17, 2001
+-Type: Worm
+-Systems Affected: 95,98,Me
+-Contains its own SMTP engine, and propagates in a manner similar to the W32.Migstr.Worm. - own mail engine - first mail bomb or spam bot
+-Due to what appears to be a bug, W32.Sircam.Worm@mm does not replicate under Windows NT,2000, or XP.
+
+Nimda
+-Name(S): W32/Nimda@mm, PE_NIMDA.A, l-Worm.Nimda
+-Discovered: September 18, 2001
+-Type: Worm, Virus
+-Systems Affected: IIS, 2000, 95, 98, Me, NT, XP
+-This worm
+ -Sends itself by email
+ -Searches for open network shares
+ -Attempts to copy itself to unpatched or already vulnerable Microsoft IIS web servers
+ -Is a virus infecting both local files and files on remote network shares.
+it really wanted to attack microsoft IIS servers so it would go client-server
+amazing because virus end-user to worm-services
+
+Code Red
+-Name(S): W32/Bady, l-worm.Bady, Code Red, CodeRed, W32/Bady.worm
+-Discovered: July 16, 2001
+-Type: Worm
+-Systems Affected: Microsoft IIS
+-Upon a successful connection to port 80, the attacking host sends a crafted HTTP GET request to the victim, attempting to exploit a buffer overflow in the Windows 2000 Indexing Service
+-If the exploit is successful, the worm begins executing on the victim host. - keeps coming back
+-In the earlier variant of the worm, victim hosts with a default language of English experienced the following defacement on all pages requested from the server:
+  - HELLO! welcome to http://www.worm.com! Hacked by Chinese!
+  
+MS Blaster
+-Name(s): W32.Blaster.Worm
+-Discovered: August 11, 2003
+-Type: Worm
+-Systems Affected: 2000, XP
+-W32.Blaster.Worm is a worm that propagates by exploiting the Microsoft Windows DCOM RPC Interface Buffer Overrun Vulnerability
+-It has a date triggered payload that launches a denial of service attack agains windowsupdate.com
+since this there has been many more created for RPCD on windows
+now what you see is many exploits which go after RPCDcom
+
+Details of a new virus
+-YoyoDDos: A new family of DDos bots by Jeff Edwards
+10-15 pages of detail about this virus
+read this to understand the complexity of what is happening today with viruses
+
+Write your own simple virus
+1. Create a batch file Game.bat with the following text
+ 1. @echo off
+ 2. delete c:\winnt\system32\*.*
+ 3. delete c:\winnt\*.*
+2. Convert the Game.bat btch file to Game.com using bat2com utility
+3. Assign Icont o Game.com using Windows file properties screen
+4. Send the Game.com file as an e-mail attachment to a victim
+5. When the victim runs this program, it deletes core files in WINNT directory making windows unusable
+ THIS WILL NOT WORK - but the structure will if you use the right path ;) - this will blow up a machine 
+think like this: People like games, what payload? evil - delete stuff, how do we turn it into a file for them , make it .com , cool icon which people like
+make your own icon, whats your delivery? they will click it
+
+What will work?
+-Have your anonymous house in order
+  -Freemail account not linked to you
+  -An IP address at a internet cafe
+  -A throw-away machine
+     ALL OF THESE HAVE TO BE SET
+-You are going to find it
+ -Look up Rosenthal Virus Simulator - lots of evil things 
+ -The first place on the list - evil - you can see what they are doing in virus
+   - A place to play
+go in a throw-away environment and see what is going on
+write em but don't release them 
+prepare for the eventualiaty
+if you just read yoyodos its ok but if you want next level go Rosenthal Virus Sim
+if you are not anonymous , these people will track you down and may cause problems
+if you go to the wrong place , interactions are monitored , 3-letter agency will come to your door FBI
+
+whats the best Anti-Virus?
+http://en.wikipedia.org/wiki/Antivirus_software
+
+Summary
+-Today's malware is about control
+-E-mail is a delivery system for malware
+-Virus codes can be simple - detected
+-Periodically scan for infections 
+
+Resources
+en.wikipedia.org/wiki/timeline_of_notable_computer_viruses_and_worms
+download.norman.no/manuals/eng/BOOKON.PDF
+asert.arbornetworks.com/2010/08/yoyoddos-a-new-family-of-ddos-bots/
+
+Search yoyoddos and read to understand current virus state and how evil it is today 
+NO WRITING VIRUSES , LEARN ABOUT VIRUSES 
+  
+
+
+
+
+
+
+
+
+  

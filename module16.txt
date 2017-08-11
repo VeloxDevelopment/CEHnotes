@@ -1,0 +1,156 @@
+Module 16: Evading IDS Firewalls and Honeypots
+as a certified ethical hacker will try to sneak into networks
+some cases undetected
+ids firewalls and honeypots will stop you
+what are they?
+then you can work around them
+find out how the tool and the signature works
+in all that you do , collect and secure
+don't publish or show people
+if you need a password do not ask the person directly, look on social media and find their favorite color ect. and create a brute force password file
+
+Module Objectives
+-Intrusion Detection System - monitor and report, and procedures to take
+ - Intrusion Prevention System = filter for what is allowed and what is not allowed 
+-System Integrity Verifiers
+ - System Integrity Verifiers (SIV) monitor system files to find when an intruder changes
+ - Tripwire - tool - host based integrity of files tool, look for changes in "these" files report it too me
+ - Agent - database - hashing 
+    - you need to find out when a company is reviewing this information, is it daily? weekly? within these timeframes is when you attack
+-Anomaly Detection
+-Signature Recognition
+-How does an IDS match signatures with incoming Traffic?
+-Honey Pots
+
+Intrusion Detection
+-Anomaly Detection - white
+  - abynormal = bad = match this pattern you are definetly bad
+   - we have 20% php
+   - we have 35% smtp
+   - we have 20% html
+   - we have 25% java
+    - durastic changes in these gain attention
+ - Activity defined as normal
+ - Network throughput
+-Signature Recognition
+ - Pattern match
+ 
+Snort = Tool
+-Intrusion Detection System
+-Open Source
+-http://www.snort.org/
+-Get it
+-Load it
+-Learn it
+Razorback = VM
+
+Basic concept: Signature = image = signature
+evil = black list
+good = white list
+
+IDS - processing
+-Data collection - tap
+ -Network-Based
+ -Host-Based
+ -Application-Based
+-Data correlation - console
+-Data summarization - program
+-Data interpretation - human
+
+IDS - views
+-Network-Based (NIDS) - Packet - impersonation is best for attacking
+ - No identity
+ - valid traffic?
+-Host-Based (HIDS) - Person - use hijack or spoof
+ - Authenticated
+ - Valid application?
+-Application-Based - Process - act af its normal packets, we want to pass this data into the sql database
+ - Authorized
+ - Valid fork?
+
+IDS - Tuning / programming
+-Signature files
+-Collected
+ -Before install
+-Learned - they turn these devices or programs on with the "learning mode" do INAPPROPRIATE traffic at this time, its ok if DEAN does this
+-False positive review
+pattern of activity that you can present to the IDS and it make it through, like http rules ; sport rules ; or porn rules or 
+can't be bothered with this in the intrusion detection system 
+WIRESHARK! - validate rules to be aware 
+
+Evading IDS Systems
+-Pattern matching
+ - Database of attacks
+ - Is your IDS database complete?
+ - Could it ever be?
+-Evasion focuses on altering a pattern
+-What if abnormal traffic was identified as reasonable to block?
+re-create the IDS of your target system and then test it yourself by using your techniques and understanding the Flags that come in
+throw in extra junk, that looks like attacks from someone else, evade signature or distract operator
+
+NMAP -D
+-Take a few IPS fromt he DShield list blacklist
+ - Use them as input to Nmap's "decoy scan" feature.
+ - Makes it look to the defender like those other addresses are scanning them as well.
+-What happens?
+ - In a high percentage of cases is that once an analyst does a few lookups and sees that the source IPs are on a major blacklist, they write off any additional port scans that may be going on at that moment as noise.
+ 
+Most detection is time/buffer based
+-Assumption-Defender has all signatures 
+  - Pretty big assumption
+-How long are clients holding
+ - incomplete session open?
+-How long is ISD keeping track of all
+ - incomplete sessions?
+-How many sessions can IDS keep track of?
+ - E(Incomplete sessions) < E(IDS tracking)
+-How long is attacker willing to wait?
+
+Other ways to pretend?
+-Evasion - distraction
+-Distraction
+ - Impersonation/Spoofing
+-Timing between IDS & client
+ - Fragmentation
+
+Hacking through firewalls
+-Pass legitimate protocol
+ - with buffer overflow to the service
+-Firewalls
+ - No deep packet inspection
+ - They can-but should they?
+  - Shun = block you for an interval look for these, best way to deal with this is to have 2 IPs , 1 is good 1 is bad , measure the timing of the bad to fine tune it
+  
+Backdoors through Firewalls
+-Reverse www shell
+-If firewall allows users to use port 80 or 443
+  - To unrestricted web sites
+  - then attackers can turn this around
+  - to use as command and control
+-Legitimate-looking answer from server
+  - operated by the attacker
+with the BYOD = bring your own device atmosphere, you compromise a device while it is not on the company network, than have it phone home use www shell once it is back inside the corporation
+
+Covert Channels
+-Tunneling = one protocol over another
+ - HTTP rides over TCP
+ - TCP rides over IP
+-Could we
+ - Change the flags in TCP
+ -Use the flags for a different reason
+  - When i set SYN 3 times in a row, Do X - Port knocking 
+-Was this an intended use?
+-Are we looking for this?
+
+Covert Channel examples
+-Httptunnel
+-Loki
+-ACK Tunneling
+-AckCmd
+
+Resources
+  
+   
+
+ 
+ 

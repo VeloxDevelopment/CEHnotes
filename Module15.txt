@@ -1,0 +1,246 @@
+Module 15: Hacking Wireless Networks
+
+Module Objectives:
+-Introduction to 802.11 - so you can attack it
+-WLAN structures
+-Protocols
+-Wireless testing methodology
+-Enterprise class wireless - Cisco Clean Air = Great Tool for protecting wireless networks from rogue access points
+-Tools
+-Securing Wireless Networks
+
+Introduction to Wireless Networking
+-Wireless local area network (WLAN) - focused on here 
+-Wireless wide area network (WWAN) - tools like Mifi , cell phone + small wireless network - tethering 
+-Wireless networking is everywhere
+-Popularity is driven by ease and cost - cheaper than running wires
+-Anywhere anytime
+-Mobile Devices are everywhere - BYOD - bring your own device
+Wireless Warwalk
+
+Wireless Technology Comparison Chart = image ABG
+we are sliding away from A and B, but from a test stand point you need to know your speeds and feeds and frequency , and frequency ranges
+not many are using anything besides G and N
+
+WLAN structures
+-Independent Basic Service Set = "ADHOC networking" = 2 devices talking to each other = Station Wireless Client <------Physical connection SHARED Media------> Station Wireless Client = image ADHOC - No authentication 
+-Infrastructure Basic Service Set = Clients don't talk to each other, they talk to an access point which goes to LAN = does not give much control = Image InfraServ 
+-Extended Service Set = image ExtendedServ = Access point is under the control of a LAN , control inbetween access point and into
+
+Protocols and Layers = image protocolandlayers
+contention free service = increase throughput
+MEMO = multiple input multiple output
+nice to know not required to know
+
+Setting up WLAN Access
+-Access Point
+ - Channel 
+  - 1-11 = US
+  - 1-13 = EU
+Service Set IDentifier (SSID)
+ - Arbitrary
+ - Alphanumeric string
+-Wired Configurations
+ - IP address
+ - Subnet Mask
+ - Router
+
+SSIDs
+-For wireless networking devices
+-A unique identifier
+-No protection
+-Single shared cleartext password
+-Between access point and clients
+-Sent out every 100ms if turned on
+-Sent out with every client access if turned off
+-all you need to do is listen 
+
+What is WEP?
+-Component of the IEEE 802.11 WLAN
+-Purpose: provide confidentiality
+ - as long as we have control over the physical, everything should be OK
+ - BUT we do not
+-Data Link Layer
+-Encryption algorithm - weakened RC4 - so you didn't have to brute force whole key space, only portion, so you can crack it right away
+
+Encryption for Confidentiality
+-Life span dependant on
+ - Algorithm
+ - Implementation of Algorithm
+ - Short cuts found after implementation
+ - Current brute force capability
+WEP is weakened by removing certain part of character structure
+good security for future
+
+For example: WEP from 1997
+-RC4
+-For 24 bit IV 50% chance repeat after 5k packets = IV = initialization vector - listen for repeat 
+-Attacker can send 5000 packets - any - there is shortcuts that make this not neccessary 
+-2005 - 3min. 2006 - 1min. 2007- 3 seconds
+
+Wireless Security Options
+-802.11 WEP - 3 Seconds
+ - Dynamic WEP or WEP + (not standard)
+-802.11 WPA - 18 minutes
+ - Interim Option - for older equipment
+ - Temporal Key Integrity Protocol (TKIP)
+ - Per-packet key hashin
+ - Broadcast key rotation
+ - Sequence counter
+ - Key mixing function
+-802.11i WPA 2 - Good for now
+ - PSK - nope
+ - AKA - Robust Security Network (RSN)
+ - CCMP = AES in Counter Mode with CBC-MAC
+-802.11x - Nope
+ - Port based network access control
+ - Mac filtering
+-TNC / NAC / NAP - Very Setup Dependant
+ - this is where you earn your money 
+
+Process overview = Reconn
+-Site Map - radio frequency - lines of site - walk with device - Kismet + laptop + alphausb - footprinting
+ -RF Map
+  -Lines of Sight
+  -Signal Coverage
+   - standard antenna
+   - directional antenna
+ -Physical Map
+   - Triangulate APs
+   - Satellite Imagery
+-Network Map
+ - MAC filter
+  - Authorized MAC Addresses
+  - Reaction to Spoofed MAC Addresses - with my alphatranceiver i can impersonate you
+ - Encryption Keys Utilized - are they using WPA WPA2
+ - Access Point Types - which vendor? what are the wireless client? a lot of cases are "we can't control open air"
+  - Extended Service Set Identifier (ESSID)
+   - Infrastructure
+  - Basic Service set identifier, (BSSID)
+   - ad hoc
+  - Vendor
+   - Channel
+   - Associations
+   - Rogue AP Activity
+ - Wireless Client types
+  - MAC Addresses
+   - Vendor
+   - Operating System Details
+   - Adhoc Mode - if they'll take this, we can convince them to pass through rogue access point for visability
+   - Associations - if they see the correct set identifier - my laptop is associated with Deans wireless network, ill make mine Deans wireless Network - Pineapple = Tool = mirror associations
+  - Intercepted Traffic
+   - Encrypted 
+   - Clear Text 
+-WLAN penetration by encryption
+
+WLAN Penetration General Process
+1. Deauth Client - rejects client
+2. Associate client - i am the access point
+3. Compromise client - give me username and password or no LAN
+4. Acquire passphrase / certificate - heres the certificate i need, then hand it off 
+5. Obtain user's certificate 
+
+WLAN Penetration by encryption
+-Unencrypted WLAN
+ - Visible SSID
+  - Sniff for IP ranges
+   - MAC authorized
+   - MAC filtering
+     - Spoof valid MAC
+ - Hidden SSID
+  - Deauth Client
+   - Aireplay-ng
+-WEP encrypted WLAN
+ - Visible SSID
+  - WEPattack
+  - Capture / Inject Packets
+  - Break WEP
+   - Aircrack-ng
+    - aircrack -q -n [WEP key length] -b [BSSID] [pcap file] - COMMAND look yourself for these!
+ - Hidden SSID
+  - Deauth Client - inject
+   - Aireplay-ng
+-WPA / WPA2 encrypted WLAN
+ - Deauth client
+ - Capture EAPOL handshake - EAPOL = Extensable authentication protocol OL
+ - WPA / WPA 2 dictionary attack - takes time - 18 minutes - 24 hours
+ - Aircrack-ng
+  - aircrack-ng -a 2 -w [wordlist] [pcap file]
+-LEAP encrypted WLAN
+ - Deauth Client
+  - Break LEAP
+   - Asleap
+   - THC-LEAPcracker
+-802.1x WLAN
+ - Create Rogue access point - impersonate 
+  - Airsnarf
+   - Deauth Client
+   - Associate Client
+   - Compromise Client
+   - Acquire passphrase / certificate
+  - wzcook
+   - Obtain user's certificate
+
+Enterprise Solutions
+-Trusted Network Connect (TNC)
+ - an open architecture for Network Access Control
+-Network Access Protection (NAP)
+ - Software based - tends toward TNC
+ - Feature in Windows Server 2008+
+
+Cisco Network Admission Control (NAC)
+-Hardware based - tends away from TNC
+-TrustSec includes the following:
+ - Cisco Network Admission Control (NAC)
+ - Cisco NAC Guest Server
+ - Cisco NAC Profiler
+ - Cisco Secure Access Control System (ACS)
+Clean Air = if rogue access points exist and are detected - deauth device and blot it out, push signal away from you and will show device used
+
+TNC/NAC/NAP components
+- A technology to analyze the security posture of, and to authenticate, the device
+- A policy-related component to configure and set the policy on what specific security criteria will be analyzed on the device
+- A technology to communicate the security state of the device to other facets of the NAC/NAP solution
+- A mechanism that receives the security posture of the device, and performs an action based upon those results
+- A policy-related component to configure and set the policy regarding what action will take place
+- A remediation technology whose purpose is to bring the device back to compliance
+- A reporting mechanism 
+
+Radius - we can't attack this - we lose here
+-Used as additional layer in the security
+-Centralized Authentication
+ - Behind the access point
+-You may get on the access point
+-You may not get past it
+ - Any authentication is possible 
+
+Wireless card: Atheros chipset
+this tool works consistently
+this on ebay "Alfa 802.11 wireless card" = 30usd + antenna
+Atheros chipset = play nice = promiscuous mode
+power to blot out = you use this as an intercept, it sees the alpha card and doesnt allow one of the clients or access point to talk to the others
+get in the way and be stronger
+
+Summary 
+-Wireless is everywhere
+-WEP was a start
+-WPA was for a short time
+-WPA 2 is safe for now
+-VPN & Centralized Authentication = Radius 
+-What about tomorrow?
+
+Resources
+-Original
+-http://wirelessdefence.org/Contents/Wireless%20Pen%20Test%20Test%20Framework.html
+-Short-form
+-http://www.0daysecurity.com/penetration-testing/wireless-penetration.html 
+
+
+
+ 
+
+
+
+
+
+

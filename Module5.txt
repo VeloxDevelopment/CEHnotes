@@ -1,0 +1,334 @@
+Module 5: System Hacking
+
+Its a hot day , humid , you've been working and you see a pool infront of you
+you do a GIANT cannonball and go AHHHH - system hacking
+
+we will do the stuff!
+this is the sexy awesome part
+system hacking is about putting the information to good use
+collecting information and applying in a way to get away
+its the simple stuff at first , pen test puts it all together
+we are gaining access!
+
+Module Objective
+-Define Process - for test you have to know it - ec council hacking documentation is a little clunky
+-Remote password guessing
+-Password cracking
+-Eavesdropping
+-Privilege escalation
+-Denial of Service
+-Keystroke loggers
+-Covering tracks
+-Hiding Files
+-Buffer overflows
+
+System Hacking Process
+1. Gain access
+  1. Low level account access - Guest
+  2. Account & Password cracking - gather account and password crack
+  3. Escalation to Admin / Root - total control - system account
+2. Maintain access - duration of attack
+  1. Executing applications - gather information then go after another resource - leverage information 
+  2. Hiding files - get back to them later on
+3. Covering tracks - limit admin reaction - try to make it so they don't see anything
+  1. Clearing logs - protect yourself
+  
+Administrator Password Guessing
+-Is NetBIOS TCP 139 port open?
+-Connect to an enumerated share (IPC$, or C$) - eventually you'll lock account out , give it a try
+-Try user name/password - keep trying 
+
+Automated password guessing
+-Use the NT/2000 shell for command based on the standard NET USE syntax - DOES NOT WORK - the share
+- 1. Create a username and password files
+- 2. Pipe this file into FOR command - heres my list here , heres my little script
+- 3. C:\ FOR /F "token=i, 2*" %\ in (credentials.txt) do net use \\target\IPC$%i/u:%j
+everytime we attempt the password use this script until we get in
+
+Password Guessing Countermeasures
+-Upgrading to 2K3 will not help
+-Block ports 135-139
+-Complex Passwords
+-IDS
+ - Log what you can review
+ - Log failed logon attempts
+ - Event ID
+  - 539 -Logon/Logoff - windows
+  - 529 -Security log full - different problem
+  
+what im worried about as a defender , i see a bunch of 529s in a row and i go into user data base and i see a bunch of accounts that are locked out
+one account is skipped and not locked out 
+what does it mean when this account is skipped?
+they found an account with a username and password that works
+maybe we unlock all of the accounts or remove logs
+what is the effect of what you do
+how does it effect the server? clean it out!
+
+Password sniffing
+-If you have local segment access
+-Email accounts are a good start - SMTP authentication is a great way, you've got an account go on and use that 
+  - usually their email password will synchronise with other local area network acocunts 
+  - people tend to be lazy and use same password over and over
+today still configs , Username and Password is accepted in clear text
+if someone is in a coffee shop and uses their email , chances are the password is in clear text somewhere 
+are you encrypted? a lot of cases not!
+
+Privelege Escalation - IS WHERE IT IS AT
+-Start with a non-admin user account
+-Seek privelege of an administrator
+-Seek privilege of system = windows - System account , subvert into operating system 
+
+so password cracking
+find user account 
+user convention
+like firstname.lastname
+like firstinitiallastname
+create list of possible passwords for particular user
+
+Manual Password Cracking Algorithm
+1. Find a valid user
+2. Create a list of possible passwords
+3. Rank the passwords from high probability to low
+4. Key in each password
+5. Repeat 1-4
+
+if you know what the naming convention is and you have access to the office and its a cube farm , its open, you can see desks
+collect the names of all of the people of the particular organization
+start looking at cubes about what they are interested in
+financial institution around christmas time they decorated their workstation
+a lady was offer to the side with Elvis things EVERYWHERE
+looked at naming convention it was firstname.lastname and my list of passwords for her is going to be:
+ "Thank you very much" (elvis quote)
+ Elvis is the king
+ long live elvis 
+ elvis presley
+ grace land
+Create a list of passwords , THIS WORKED!!!^^^^
+highest-lowest organize them 
+key in each password and repeat it
+3 attempts , and the above was over and he was in!
+
+Password Cracking Algorithm
+1. Find a valid user
+2. Find encryption algorithm used - usually 1-way hashing with SALTING on it
+3. Obtain encrypted passwords - particular server - i have this information, i don't need that database *breathes heavily* YOU WANNA MAINTAIN ACCESS AFTER THE FACT?
+	you want that password list , they may lock you out of this one , but you have all of those
+	company = OH WE'VE been hacked everyone needs to change their passwords - they're not going to change them that significantly - use the password database to come back in
+	come back and get more user names and passwords - been seen > 2 times = adversarial - Remediation - radical passwords or 2-factor authentication 
+ 1. Need the SAM database - available on windows local machines , pull it - use it and go into the database ,  , get a match? you're in , create more than 1 account to maintain access
+4. Create list of possible passwords
+5. Encrypt each word - encrypt with the same algorithm and do comparison
+6. See if there is a match for each user ID
+
+Deans Password Attacking - not cracking
+1. Identify the user name creation policy
+ - EXAMPLE = first.last
+2. Look for a new employee - hey how do you tell? we wouldve done reconn and saw job was posted on monster/linkedin we look at if it was taken down or people that apply
+ - they change passwords to their favorite
+ - are they a big fan of this football team or that basketball team or they like barbies or whatever it is
+3. Search TormentedX networking sites - collect their favorite colors and what not , create a database for them
+4. Build dictionary to match - complexity rules are easy on the first couple times , they expect you to screw up
+
+NEW VECTOR
+Call vector , Call support , use the employees name , im locked out please help me ,
+heres your reset password = superbluepassword2 , please log in and change it now
+
+Use this or Deans Password attacking 
+
+Password Types - leet speak = numbers for letters , end users normally use a post it note or something when the password complexity is HIGH 
+	-Flip the keyboard over , look around , it will be there!
+	-Janatorial services will give you time
+-only letters
+-only numbers
+-only special characters
+-letters and numbers
+-letters and special characters
+-special characters and numbers
+-all of the above 
+
+Types of Password Attacks
+-Dictionary attack
+-Brute Force attack
+-Hybrid attack
+-TormentedX engineering - normal organization
+-shoulder surfing - normal organization
+-Dumpster diving - normal organization 
+
+Cracking NT/2000 passwords
+-SAM file contains the usernames and encrypted (hashed) passwords
+ -LOCATED at %systemroot%\system32\config
+-File is locked when the OS is running    
+-Run rdisk to get an extra copy - a good admin will back up the file so that they do not lose the accounts
+  - copy a copy locally and then copy to usb / disk
+-Boot to an alternate OS
+-Extract the hashes from the SAM file 
+
+history is repeated even for the new operating systems
+
+Redirecting SMB logon to the Attacker
+-Trick the victim into attempting authentication to the attacker
+-Send an email message tot he victim with an embedded hyperlink to an attackers SMB listener
+-Clicking link is trusted
+-Users login is cached
+-User sends credentials - impersonate
+
+SMB redirect Countermeasures
+-Configure 2k to use SMB signing
+ -Security Policies/Security Options
+-Communication will be cryptographically signed at the block level of SMB
+
+being washed out , still around though! they have software of some kind that ONLY works on windows 2000
+Medical and Legal professionals! Custom applications that are only on windows 2000
+
+NetBIOS DoS Attack
+-Sending a 'NetBIOS Name Release'
+-UDP 137 - name release , if i can get rid of your name and impersonate you
+-Place its name in conflict
+-this will block the client use of name
+
+If i cant take your credentials , then i can block your ability authenticate
+
+Land manager hashes , lanman hashes
+people forget that these things were created and repeat mistakes
+
+What is LanManager hash?
+LM algorithm
+-Converted to uppercase
+-Pad with null characters to make it multiple of 7 character length
+-Split in 7 character chunks
+-Encrypt each string
+     (hash)
+-Concatenate the strings
+
+LaNMan Countermeasures
+-7-14 character apha-numeric passwords
+-Password change policy every 30 days
+-Physically isolate and protect the server
+-Use SYSKEY to store hashes on disk
+-Monitor logs for brute forcing
+
+Keystroke Loggers - Favorite is Hardware
+-Stealth software or hardware
+-Between keyboard hardware and operating system
+-Record every key stroke
+
+you can intercept wireless keyboards
+lets pretend its wired - most enterprises today use these
+the keyboard has been used aggressively and has been eaten near or on, this is called Keyboard Plaque
+turn it over and tap it , all the things fall out GROSS
+go in as the cleaning crew for keyboards , bring in bright new shiny keyboards , we'll take yours and dishwash it because keyboards are dishwasher safe LOL
+say "log off your system" LOOK AWAY , ok now lets plug this keyboard in and log back in , don't key in your password in front of me, let me turn my back
+there are keyboards today that are set up with keystroke loggers, both wired and wireless.
+after cleaning their keyboard and bringing it back you retrieve the keyboard which has the keystroke logger , this keyboard must have a similar asset tag it was temporary
+
+What are the first key strokes that they used when you put the keyboard in ? USERNAME and Password
+WOOHOO you WIN
+
+Covering Tracks
+-What Attackers do
+-What pen testers rarely do - if its red team blue team they do but normally not
+-Why?
+ - Continue to control asset
+ - Maintain control
+ - Gather more data for larger attack 
+ 
+Disabling Auditing - CANT DO IT ON A WINDOWS SYSTEM
+-First thing intruders will do
+-Turn it off
+-Push evidence out of log
+
+Log Wrapping - over writing - these are the systems you want
+benign requests that push down information , using a lot of events , until its out of the system , lots of random stuff , but original attack is gone 
+
+Clearing the event log
+-Event Viewer
+ - Remove all
+ - Record removal as first event of next log
+-Cannot remove single event 
+
+Corrupt and Reset so that the attack is removed , just shows reset
+looks like someone cleared off the machine 
+
+we can clear the activity, how do we hide files locally on the system?
+change attributes of the file or directory 
+
+Hiding Files
+-Attrib command
+ - attrib +h [file/directory]
+-NTFS Alternate Data Streaming
+ - Think of extended properties of file - so that it can't be read by the interface 
+ - Not limited in size
+ - Can be more than one
+ 
+Copying files with improper properties and protecting yourself and the asset you've captured
+
+Creating Alternate Data Streams
+-At command line
+ - notepad test.txt
+-Put data in the file
+ - save the file
+ - close notepad
+-dir test.txt and note the file size
+-notepad test.txt:hidden.txt
+ - Type some text into notepad, save the file, and close
+ - Check the file size again
+-Open test.txt
+ - you see your original data
+hiding it from users eyes
+if you have a file with users and passwords , you can leave it instead of bring it with you
+
+Alternate Streams countermeasures - not much the good guys can do , good tool!
+-Deleting a stream file
+-Copy the 'front' file to a different file system
+ - FAT to NTFS
+ 
+What is steganography? can be done with data at rest or data in motion , inperceptable ,
+-Process of hiding communication
+-Graphic inside graphics
+-Carrier must be larger than carried
+-NOT encryption - you'd need encryption to go along with it
+-Attackers embed information:
+ - Source code for hacking tool
+ - List of compromised servers
+ - Plans for future attacks
+ 
+ allows us to store information and come back for it later
+
+Steganography Detection
+-Many tools can analyze
+-No one takes the time
+-That is why it is so helpful at covering tracks
+
+use sniffing or keystroke logging before password cracking 
+
+Summary
+-Password guessing/cracking
+-Password sniffing is preferred
+-Vulnerability scanning aids hacker by identifying which password cracking technique to use
+-Keystroke logging
+-Evidence of attack is eliminated by attackers
+-Stealing files and hiding files are means used to sneak out sensitive information
+
+Resources
+www.expandingsecurity.com/2011/05/ceh-v7-system-hacking-study-guide/
+type in system hacking or steganography for further details
+learn to be creative
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+

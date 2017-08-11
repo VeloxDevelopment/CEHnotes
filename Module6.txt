@@ -1,0 +1,189 @@
+Module 6: Trojans and Backdoors
+
+we just finished system hacking
+1 piece is collecting user names and passwords
+can't just have 1 methodology for this
+
+System Hacking process
+-Gain Access
+ - low level account access - focus
+ - account & password cracking
+   - Keylogger = password capture
+ - escalation to Admin / Root (or trojan)
+-Maintain access - duration of attack
+ - executing applications
+ - hiding files
+-Covering tracks - limit admin reaction
+ - clearing logs
+ 
+lets get an account and password by giving the user a trojan
+Module Objectives - 
+-Defining Trojans and backdoors
+-Understanding the various backdoor genre
+-Overview of various trojan tools
+-Learning effective prevention methods and countermeasures
+-Overview of Anti-Trojan software
+-Learning to generate a Trojan program
+
+very unlikely in the scope you'll be able to do a real trojan , but needs to be KNOWN
+
+Terms
+-Trojan
+ - Unauthorized program contained within a legitimate program - hi heres this cool game , play this game , install it and something else ^^
+ - performs functions unknown by the user - this is the something else ^^
+  - anything evil and unwanted
+-Cover Channel - communication channel
+ - Hidden transmission
+ - Security policy says use this tool for these purposes - we'll use this for X
+ - ? what about other uses? -NO
+ 
+Terms
+-Bot, Zombie, victim - successful trojan
+ - under the control of an attacker
+-Backdoor
+ - a way in to a compromised system, typically installed by a trojaned piece of software - another avenue to get into the system 
+ - sometimes synonym of trojan 
+ EC council blends these terms
+ 
+Requirements for trojan
+-Privilege to install
+ - If you can't install, you can't get it - end user has to have action and install - white lists
+-Trusted channel to download - no inspection 
+ - If you can't communicate you can't transmit
+-Cover channel is better - something that is not inspected by security mechanisms
+ - if they don't know you are communicating
+ - you can transmit
+usually in an email and the code is clicked or the game is selected and downloaded by end user 
+doesn't have to be a sychronis communication channel , it can be an asynchronis communication channel
+where you use a usb drive with an auto exe , plug it in , auto run , installs trojan
+
+Working of Trojans
+-User is presented with opportunity
+ -  To install software / Click Here
+ - Extra software is installed on victim - i get to play this game! i can't wait! free game this is awesome!
+ - Software phones home (recurring) - it goes out and checks in , at first it may install file , then connects up and starts a backdoor , hi im here is there anything you want me to do?
+ - Attacker gets access victim - running commands 
+ - attacker contorls vicitim and collect data
+ 
+how do we transmit? is there a port that the machine is not using? use reasonable port - admins firewall say its reasonable
+admins will say turn off access to ports 137-139 and then you open them back up for trojan
+137 is open and thats ok , if its port 666 thats probably an evil port 
+data flows back up and seems reasonable
+
+Vectors of transmission
+-Any port that is not in use
+-Better ports are on that seem reasonable - whatever reason
+ - TO IDS
+ - To User
+ - To administrator
+ 
+Modes of transmission
+- ICQ
+- IRC
+- Attatchments
+- Browser or Email - focus
+- NetBIOS (File Sharing)
+- Fake Programs
+- Physical Access - USD thumb drive - work really really well! not disabled on most machines 
+- Un-trusted sites and freeware software - anything that is free has something with it 
+
+How do you know if you've been trojaned? YOU DON'T
+no clue as to what is going on , the power of machines and the slimness of the trojan 
+trojans don't chew up access or network because of small file sizes
+super duper quad machines , you'd never notice the small thing
+you wouldn't know which process on task manager which takes 5-10mb
+
+How do we convince user?
+- Legitimate software compromised - new copy of office or visio , lets say cool new app EverNote , compromise it and download it "here" , fake evernote site , Evernote 2
+     - New trial , Cool tool , Version Next , free for you
+- Freeware / Winkware
+- Fake Programs
+- Games
+- Attatchments
+- USB / CD / DVD
+
+What are you going to use?
+this sits in the compromised software 
+Netcat (do this) not the rest
+-Any port
+-Outbound or Inbound connections - reverse 
+-TCP or UDP
+-port-scanning capabilities - see whats open
+-loose source-routing capability - it can redirect and route around failure
+-when using look out for reflection - older versions LOOK OUT , when you have control , look for the ECHO if you type DIR you get DDIIRR because 1 is for sending and 1 is for receiving 
+   - 2 machines trying to SYN and gets messed up 
+-Cryptcat - Encrypted version - another way to cross channel and protect yourself from defenders
+
+best tool outside of ceh
+Maltego , NMAP , Netcat , Wireshark = USE THESE 
+these tools are built into the latest distribution of BACKTRACK
+
+Know your Trojan ports - classic trojans use specific ports
+-http://www.jlathamsite.com/dslr/suspectports.htm
+-Basically all of them
+-If users are not using them, let's Go!
+-What would we use? what ports are reasonable? IDK this requires Scanning
+
+We need to know what kind of trojans are out there and what tools the adversaries are using
+we realise a machine has been compromised
+we see this thing = report
+
+Types of Trojans -
+-Backdoor = designed to give malicious users remote control over an infected computer - a way in
+-Exploit
+-Rootkit
+-ArcBomb = Archives designed to freeze or slow performance or to flood the disk with a large amount of "empty" data when an attempt is made to unpack the archived data
+     - kind of DoS - slow machine down
+	 - when we decrypt , unzip , untar this takes up processing time
+-Banker = Steal user account data relating to online banking systems, e-payment systems and plastic card systems
+-Clicker = designed to access internet resources - clickforensics company , monitor clickthroughs and banner-ads , see if innapropriate
+     - defenders = we wanna run up the bill on someone who is advertising , so we access a whole bunch of computers click through the banner
+	 - we'd see them clicking? today what happens is they submit the queries and intercept BING / GOOGLE and append other search terms that will to banner display
+	 - you may have typed "baby doll" on side bar is "teddy bears"
+	 - we're doing this on a massive scale - normal browsing with weird search terms 
+	 - makes more money for the adversarie given the clicks
+-DDoS = Distributed group of computers for reducing availability of service
+-Downloader = download and install new versions of malicious programs which will run automatically when the operating system restarts - intervals
+-Dropper = Program for installing malware - create EXE for end user 
+    - Malware = evil software
+	- Wrapper = binds malware & benign software
+	- Benign software = what the user thinks they are getting
+-FakeAV = Programs that simulate the activity of antivirus software. Designed to extort money from users in return for the purported detection and removal of threats
+   - Buy this thing and it will protect you because you are compromised OMG OK
+   - happens all the time!
+   - this will help me? thank you fake microsoft site!
+   - detect and remove threat that may not even exist
+   - give them what they didn't want to begin with
+-GameThief = this type of malicious program is designed tos teal user account information for online games, YOU STOLE MY GOLD
+   - if you went to police and said "someone stole your gold!" ok lets go to your house and get fingerprints
+   - NO, did that gold or those points cost you real money? no activity police can track
+   - EVERYWHERE
+-IM = programs are designed to steal user account data (logins and passwords) for instant messaging programs
+   - we could subvert someone and make them use account for something else
+   - LIKE TormentedXly engineer someone into delivering information you need when you are not the original person that has been compromised
+-Notifier
+-Proxy
+-Ransom = modifies data on the victim computer by typically encrypting so that the victim can no longer uset he data. Once the data has been taken hostage the user will receive a ransom demand.
+   - connect to a machine , encrypt , if you don't pay us we won't send you the key , but the key will never be sent
+   - only helpful thing is a good backup of files
+-SMS = send text messages from infected mobile devices to premium rate numbers
+   - collect money , diposit into another account , paper trail , someone creating money by using your rates
+-Spy = spy on user's actions
+  - listens and captures key strokes 
+-Mailfinder = Harvest emaila ddresses from a computer
+  - if i can get onto your computer or email and you have contacts i will take them
+  - Hi click this link because its really cool and i miss you and i haven't seen you in a long time but its been sent to 10k people
+-PSW
+
+Summary
+-Trojans
+  - Malicious - remote administration tool
+  - To gain and retain access on the target system
+-Awareness and preventive measures are the best defense
+
+Netcat and Secure List
+ 
+
+
+
+ 

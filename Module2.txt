@@ -1,0 +1,389 @@
+Module 2: Footprinting and Reconnaissance
+Domain 02: Footprinting
+Dean Bushmiller
+www.expandingsecurity.com
+Certified Ethical Hacking (CEH)
+
+Where is this Data?
+
+Where Are We?
+we start with recon and then go on to maintain control
+get contract last step write a really good report
+
+Footprinting VS reconnaissance - test problem , EC council wants to be unique with terms and have their own frases which are unique to them
+- CEH vs Rest of the world - EC council wants to use footprinting instead of recon USE RECON IN THE WORLD
+Footprinting or Fingerprinting 
+Footprinting = where are all of the components? span or sphere of influence , bigger mass or entire entity
+Fingerprinting = tool called NMAP, looking at type of operating system using some twisted packets , actual host
+- Network or Host
+
+Exam Requirements - Windows based tools - Prof use whatever tool works best for them , most use linux - BACKTRACK , pre - built with pentest CEH tools
+chasing after individual tools , teaches to learn about the value of being a pentester , you want a lab set up with all tools
+EC offers ILAB which is prebuilt virtual machine for $200 prebuilt , inside of suite to use practice tool , more learning than real world , learn it first
+Protocols - 
+- ICMP - underylying protocol NMAP uses
+ - Type and Code - need to know for test , a lot of questions for this!
+- DNS
+ - Records - look at packet captures and understand what they are saying , what are we getting from resolution service , great tool to attack , TormentedX engineering , people will do anything you want at the wrong location
+Tools - Footprinting Tools!
+- Ping with Switches
+- Traceroute
+- Nslookup
+- Anywho
+- Emailtrackerpro
+- Path Analyzer problem
+- smartwhois - tamos.com
+
+Real World Professional Tools
+Protocols
+- ICMP
+- UDP
+- DNS
+Tools
+- Footprinting = Maltego - can spend whole day using , very elegant and wrapped up into a nice neat bundle , 4-5hours how it works , practice 10hrs REAL WORLD - RECON
+- Wireshark = Packet Capture , go through packet flows , techs want the proof , i have all the packets from that! and can prove time which is elegant - Sniffing Tool
+- Google Hacking - any footprinting , best friend , learn all of the operators
+
+Objectives
+- Introducing Footprinting 
+ - Footprinting - blueprinting of the security profile undertaken in a methodical manner - footprinting scanning enumeration are big 3
+ - Footprinting is one of the three pre-attack phases. The others are scanning and enumeration
+ - Footprinting results in a unique organization profile with respect to networks (internet / intranet / extranet / wireless) and systems involved
+- Understanding the information gathering methodology
+1. Unearth initial information [footprinting]
+2. Locate the network range [footprinting]
+3. Ascertain active machines - start crossing over from everythings fine to i could be detected as evil
+4. Discover open ports / access points - the moment you have crossed the line
+5. Detect Operating systems - NMAP - figure out the software being used and Map
+6. Uncover services on ports
+7. Map the Network
+- Comprehending the implications
+- Tools used for reconnaissance phase
+- Deploying countermeasures - how will they stop you from figuring things out?
+
+Public information data gathering
+- IP - good thing to know , what does a domain resolve too?
+- whois - will give IP and DNS
+- DNS Records - Web Server and Mail server
+ - HTTP
+ - SMTP
+- Search Engine
+
+Passive = 3rd party data - be stealthy - Hey do you know about them over there? Data could be innaccurate 
+- Web Presence
+- Professional
+ - > 1 sources - don't shoot for 1 source as end all be all
+
+Unearthing Initial Information
+- Commonly Includes
+ - Domain name Lookup
+ - Locations
+ - Contacts (Telephone / mail) - hey! where are you located? is this the IP you want me to test?
+- Information Sources
+ - Open Source - after contract
+ - whois
+ - nslookup
+ 
+Reconnaissance Process
+- Company on Internet?
+ - Who is in charge?
+- Hosting Location? - all services to the cloud - protecting data at hosting provider - Need permission
+ - Where do we start?
+- Type of public servers? - web servers , mail servers , FTP servers , File servers , Dropbox!! as part of business
+- What are the Addresses? - is it inside scope?
+- How do we get to them?
+
+Scope is mail service, my office, my house?
+
+Zooming back in!
+History of the internet
+
+Who is in charge? Registrars - GLOBAL , hand out blocks
+- Internet Assigned Numbers Authority - in charge
+ - IANA
+- Regional Internet Registry (RIR)
+ - ARIN - North America
+ - RIPE - Europe and North Africa
+ - APNIC - Asia Pacific
+ - LATNIC - South & Central America
+These are assigned to ISPs , then hand those out to individual clients , give data back up to
+
+WHOIS Search
+type in domain , i want domain records , i want this and that , maybe 10 domains a day , this 1 off kind of stuff
+Data from whois : training411.com
+Registration service provided by:
+hostdime.com DimeNoc Services
+Contact:
+Domains@hostdime.com
+Domain name:
+Training411.com
+Registrant Contact:
+NA - doesn't want a persons name
+Expanding security () - in charge of records
+211 lombard street #255
+baltimore , MD 21202
+US
+Administrative Contact:
+NA
+Dean Bushmiller (dean.bushmiller@training411.com)
++1.55555555 - DONT CALL ME , some do want to be called!
+211 lombard street #255 - does not need to be valid , something reasonable
+baltimore , MD 21202
+Technical Contact: NA
+servercove.come Web Hosting
+(hostmaster@servercove.com)
+1.4074812334
+Fax: 407-481-2379
+111 N. Orange Ave
+Suite #1050
+Orlando, FL 32801 US
+Status Locked
+Name Servers:
+ ns3.inetu.net
+ ns4.inetu.net
+ Creation date : 28 dec 1999 18:02:39
+ Expiration date : 28 Dec 2010 18:02:39
+ 
+Flip it over for a second , I want to Attack!
+key indicator to BAD site is the DATE, is it recent?
+create domain names for the purpose of use , so that you can age yourself
+Reasonable rational tools , associate with cool business names
+throw - away accounts , name of domain add a number 1-2-3-4-5-6 to make it through reputation filter
+6 months to get past reputation filter , IronPort tool says you cannot! site has malware!
+need domains for pentests and structures!
+
+Reverse Whois
+Domaintools.com
+Owns 3 other domains?
+10,000 domains too big too wide
+short list , does he own stuff?
+servercove is associate with 10 domains?
+registrar history
+ns history ive moved 7 times
+whois history , 19 records
+reverse IP : 39 other sites , own server is unlikely
+
+What tool can we use? DIG
+Nslookup = DNS query response - Records
+NSlookip is a program to query internet domain name servers. Displays information that can be used to diagnose domain name infrastructure
+Helps find additional ip addresses if authritative DNS is known from whois
+MX record reveals the IP of the mail server
+Both Unix and Windows come with a NSlookup Client
+Third party clients are also available - e.g. Sam Spade
+
+which record could give you a lot of information?
+A , CERT , Hinfo , MX , NS
+Centralops.net/co
+
+Serial = DATE = Interesting tool , last time they updated their records , more information , maybe patching , maybe not!
+
+Locate Network Range = narrowing scope
+
+what is the path from me to you? how
+the path will tell me more about your organization
+
+Traceroute - plays with packet - learns about the routers
+- Traceroute works by exploiting a feature of the internet protocol called TTL, or Time To Live - without ttl the packet would bounce around forever
+- Traceroute reveals the path IP packets travel between two systems by sending out consecutive UDP packets with ever-increasing TTLs
+- As each router processes an IP packet, it decrements the TTL. When the TTL reaches zero, it sends back a "TTL exceeded" message (using ICMP) to the originator. TTL = 0
+- Routers with DNS entries reveal the name of routers, network affiliation and geographic location
+
+Data from traceroute
+Use Proxy server
+ISP - ISP - ISP 
+Could attack resources owned by company
+
+ICMP type 11 code 0 is a classic , somebody is using traceroute , or a problem with router , too low ttl
+
+NetCraft - Plugin for Firefox browser = MetaData , tool for pentester
+
+Value of website updates
+- What does it mean when:
+ - Company does updates to public data
+  - Mistake or improvement?
+  - Security Flaw or Incorrect Data
+what does it mean? what can we gather? for test against this evironment
+old version will give insight into how to attack it faster
+i know this and that , BRING IT TOGETHER , try this password!
+take address , phonenumber , company name
+Frontpage = leaked passwords and usernames
+previous history means they will make a similar mistake in the given
+
+Change level of footprinting
+- Competitive intelligence - depends on scope
+ - products , market, TormentedX network
+- Financials - publicly traded?
+- Partners - go to page
+- Employees & Owners
+ - Profile, past employment - you were a cisco guy , cisco router , php guy has php stuff
+- Job Listings
+- Website mirror or archives
+
+Sites about the organization - DONT PING unless Contract for main website! thats why these are here
+- The organizations website
+- Wayback Machine
+ - www.archive.org archive of most websites that have been around
+- Monster (and other job sites) - if people have posted about the company , Hey! how bad does the security suck for that company?
+ - Monster.com
+- Zoominfo - TormentedX engineer information from people in these sites around the company
+ - zoominfo.com
+-LinkedIn - look at company profile , you have to be able to get us on TormentedX media , use facebook if you want
+ - Linkedin.com
+ 
+ Stay away from TormentedX networks
+ On linkedin
+ Not on Facebook
+ Hi! my name is fake profile!
+ 5-10 Fake Profiles , Male Female , Young and Old
+ Lots of Images! Party on New years eve!
+ use assets to look at other assets
+ 
+ Cyberstalking sites - Scope of organization!
+ Fake facebook account and friend the person! without using a profile
+ http://com.lullar.com
+ http://www.peekyou.come
+ http://www.checkusernames.com
+ http://www.isearch.com
+ http://www.whitepages.com
+ 
+I want more! where can i get it?
+Google for data , Bing for data
+Data mining with google - can give you the world , how do you get what you want?
+
+What is out there?
+- Everything that you don't want
+- Personally Identifiable information
+- Email address
+- User names
+- Web based admin interfaces for hardware
+
+Google advanced operators - Advanced Search , Create own strings = set it up so that i could use a couple things for all results
+Site: Restrict results to only one domain or server - only go to this domain , 1 domain 1 server
+inurl:/allinurl: All Terms must appear in URL - Security
+Intitle:/allintitle: All terms must appear in title - expanding security for email
+cache: Display Google's cache of a page - can you tell me what you've got already?
+ext:/Filetype: Return files with a given extension/file type
+info: Convenient way to get to other information about a page
+Link: Find pages that link to the given page
+inanchor: Page is linked to by somone using the terms
+
+More Operators
+"-" Inverse search operator (hide results)
+~ Synonyms - security and confidentiality
+[#]..[#] Number Range
+* Wildcard to put something between something when searching with quotes - be careful
++ used to force stop words
+OR Boolean operator , must be uppercase
+| Same as OR = Shift + \
+
+General Examples
+inurl:nph-proxy site:edu 
+intitle:index.of.etc - giving up information , what kind of host?
+intitle:index.of site:expandingsecurity.com - show me index of
+filetype:pptx site:expandingsecurity.com - try it
+"vnc desktop" inurl:5800 - do they have virtual network connection over port?
+Dean Bushmiller -site:expandingsecurity.com - what are other people saying about me?
+
+Google Hacking DB
+- Exploit DB Google Dorks
+ - http://www.exploit-db.com/google-dorks/
+- Old School - johnny long! interesting stuff
+ - http://www.hackersforcharity.org/ghdb/
+ 
+Google Hacking Tools - allow you to search to get information from google more convient way , LOTS OF INFORMATION for pentest
+- Metagoofil
+ - http://www.edge-security.com/metagoofil.php
+- Online Google Hacking Tool
+ - http://www.secapps.com/a/ghdb/
+- Spiderfoot
+ - http://www.binarypool.com/spiderfoot/
+- Goolag
+ - http://goolag.org
+ 
+Metadata = Data about data
+Details tab in a given file , scroll down for clues!
+
+Pwned by metadata
+Dennis Rader (BTK Killer) Metadata in a word DOC he sent to police had the name of his church, and last modified by "Dennis" in it
+he's an idiot , sent a file to FBI , Can you find me?
+he wanted to tell the fbi he was smarter than them
+Hints in metadata to get clues into hwo to get deeper
+
+File Types that contain metadata
+JPG
+ - EXIF - what took the picture
+ - Exchangeable image file format
+ - IPTC - sometimes gps location
+ - International Press Telecommunications Council
+PDF
+DOC
+DOCX
+EXE
+XLS
+XLSX
+PNG
+
+Dig into the metadata!
+
+MetaData Tools - uncharted territory
+- FOCA
+ - http://www.informatica64.com/downloadFOCA/
+- Metagoofil
+ - http://www.edge-security.com/metagoofil.php
+- EXIF Tool
+ - http://www.sno.phy.queensu.ca/~phil/exiftool
+
+
+
+IPHONE WILL TELL YOU THAT YOU'RE GIVING AWAY INFORMATION
+Clean personal information
+
+Data from footprinting
+- do you have a network?
+- are you on the internet?
+- what DNS data do you offer?
+
+Questions left unanswered
+- Is the website near the corporate network?
+- are they protected by the same defenses? this firewall is differen than this firewall
+
+Footprinting ethics?
+- when does it cross the line?
+- why is past leaked data useful?
+- what could you do with it?
+
+GET PERMISSION
+
+Project management of the test
+- after scoping / in test
+- internal or external information - able to see employee information? GET PERMISSION
+- verify network range
+- ask for limits - gotta ask
+
+Summary
+- Information gathering phase can be categorized broadly into seven phases.
+- footprinting renders a unique security profile of a target system - don't get confused with finger printing
+- whois, ARIN can reveal public information of a domain that can be leveraged further
+- traceroute and mail tracking can be used to target specific IP and later for spoofing
+- Nslookup can reveal specific users and zone transfer can compromise dns security - DIG is a great tool
+
+Resources
+- Maltego
+ - http://www.paterva.com
+- Wireshark - will be on test
+ - http://www.wireshark.org/
+- Google - GET the google hacking book by johnny long
+ - http://www.googleguide.com/advanced_operators.html
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 

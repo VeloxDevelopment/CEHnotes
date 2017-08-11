@@ -1,0 +1,242 @@
+Module 14: SQL Injection
+we've done server we've done application , now we're drilling into the database 
+
+Module Objectives:
+-What is SQL injection?
+-How is SQL injection done?
+-Attacking Microsoft SQL Servers
+-Prevention and Countermeasures 
+
+Command Injection
+-Conditional logic programming
+  - Basis of programming languages
+  - WHEN (this) THEN (do) - SQL - look for these then act upon them 
+-Some command injection susceptible languages
+  - SQL, Hibernate Query Language, LDAP, XPath, XQuery, XSLT, HTML, XML
+  - OS command and shell commands - RainForestPuppy - get to EXE, return a shell, in URL
+-SQL - Structured Query Language
+  - ANSI standard from 1992
+  - Query = Question
+  - Formatted for databases
+  - Keyword based language - SELECT - my name is Dean SELECT - lil johnny drop table - throw in quotes and its a TRUE command
+Other forms of SQl
+-PSQL, T-SQL,PLSQL,SQL PSM, pgSQL... - we'll add our own stuff! <-bolted on to basic structure
+
+SQL injection (generic)
+-Normally user passes data to predefined queries
+-Attacker passes commands that are misinterpreted by the DB or OS as reasonable executable instructions - this is where the failure happens
+-The data that is passed can be a simple request or compound request 
+  - Valid query attached to inappropriate query
+-Attempts to modify parameteres of a web-based application in order to alter the SQL statements parsed to retrieve data from database
+
+COMPOUND QUERY = blue eyes, green shoes, 5' 4", modify the statement so that we can parse data and get data we shouldn't have
+
+How complex can a simple query be?
+image = ComplexQ
+this is - you cannot find my quotes or parts that you're looking for as a defender
+ONE CLICK OWNAGE - Ferruh Mavituna - http://www.mavitunasecurity.com
+this used to allow root access through URL on an SQL server 
+ferruh's cheat sheet is awesome!
+
+What it should be used for:
+-SELECT *
+  - (all)
+-FROM product.inventory.table.inventory
+  - (stuff for customer to buy)
+-WHERE product.inventory.table.inventory>0
+  - (when we have something to sell)
+
+What it can be used for:
+-SELECT *
+ - (all)
+-FROM past.customers.creditcarddata.table
+ - (stuff we don't want anyone else to see)
+-WHERE
+ - 0=0
+ - (all the time)
+
+How to fix it?
+-Knee jerk reaction is filter for bad
+ - do not let anyone type 1=1
+ - How about
+   - 0=0
+   - 1>0
+   - Every creative thing that attacker can type
+ - handled escape characters
+   - not a long term solution
+-Best way is to parameterize queries
+  -parameterize = if they have turned all data to TRUE it cannot be turned into keyword functions 
+
+Parameterize Query
+-Queries that have embedded parameteres in the SQL statement
+-Parameters/data can be passed to these queries at runtime
+-Parameters containing embedded user input (EVIL) would not be interpreted as commands to execute
+-There would be no opportunity for code to be injected
+-Bonus
+  - more efficient
+  - more secure
+
+Blind SQL
+-DBA uses safe queries
+-Attacker test for conditions with 
+  - True or False (one bit at a time)
+  - True or False your first name starts with T or S
+    - if false pause
+Image = BlindSQL
+this could take forever! now there are tools ;)
+you have to know what you're looking for
+
+What else could attacker do?
+-Integrity Attack - buy negative items and get money back 
+ - UPDATE = Change
+-Availability Attack
+ - DELETE
+-Confidentiality Attack
+ - SELECT
+-Any SQL keyword can be used
+-Reconnaissance Attack
+ - Footprinting = database, tables, stored procedures
+ - Fingerprinting - operating system
+ 
+How do we know attackers can attack?
+-Form fields
+ - Any user-supplied data sent back to server
+-Try using (') or (;) as the username
+ - see what is returned
+ - too much data about database - a bad thing - could learn a lot
+-Web server POST command 
+
+What is returned
+-From single quote (') or semicolon (;)
+ - Microsoft OLE DB Provider for ODBC Drivers error '80040e14'
+ - [Microsoft][ODBC SQL Server Driver][SQL Server]Unclosed quotation mark before the character string''
+ - /target/target.asp, line 113
+-What should be returned
+ - '500 Server Error' or Custom error page
+
+Blind SQL injection attack
+-Username = '
+-Attacker gets a generic page specified by the developer
+  - instead of reconnaissance data
+-attack is more difficult but not impossible
+-Attacker can stills teal data by asking a series of True and False questions through SQL statements
+difficult but not impossible 
+
+Testing Blind Injection Dumper - SQLDumper = image 
+
+Sample SQL injection attacks
+-What is the SQL statement
+ - SELECT * FROM Users WHERE Username='1' OR '1' = '1' AND Password ="1" OR '1' = '1'
+-In the browser URL window type 
+ - http://www.example.com/index.php?username=1'%20or%20'1'%20=%20'1&password=1'%20or%20'1'%20=%20'1
+ - yes it is this easy!
+ wherever there is a space = %20
+
+Access to server: Login Guessing
+-Operating sysetm accounts
+ - local user account
+ - guess the username of an account
+-Microsoft SQL server
+ - Admin of the database
+ - sa password <blank>
+-Guess the users / accounts
+ - Table of users in the database
+ - querying for similar user names 
+sysadmin , guest
+check what is suppose to be there 
+
+Shutting down MS SQL Server
+-SHUTDOWN WITH NOWAIT
+ - Remote Shutdown
+-You could build a query
+ - SELECT username;
+ - FROM users
+ - WHERE userName=';shutdown with nowait;-'
+ - AND user_Pass='  '
+TRY THIS
+
+Preventive Measures
+-Minimize privileges of Database Connection
+  - no web permissions for whole database
+  - Build Views
+-Disable verbose error messages
+-Protect the system account 'sa'
+
+Overview Preventive Measures
+-Use of Prepared Statements (Parameterized Queries)
+-Use of Stored Procedures
+-Escaping all user supplied input
+-Additional Defenses
+ - Enforce: Least Privilege
+ - Perform: White List Input Validation
+
+Parameterized Queries
+-Prepared statements ensure that an attacker is not able to change the intent of a query
+-Force the developer to first define all the SQL code
+ - Answer the question - what is valid?
+ - then pass in each parameter to the query later
+- This coding style
+ - allows the database to distinguish between code and data
+ - regardless of what user input is supplied
+- If an attacker were to enter the userID of '1'='1
+ - Query would look for a username with literally matched the entire string '1'='1
+for every new query , parameterize a new one! = remediation or suggestion to business or entity 
+realise business impact easy to say - difficult to do
+
+MS SQL param sample = image paramsample
+CREATE PROC [sp_demo_injection02]( @name sysname)
+AS
+ declare @cmd nvarchar(max)
+ declare @paremeters nvarchar(max)
+ set @cmd = N'SELECT * FROM sys.database_principals WHERE name = @name'
+ set @parameters = '@name sysname'
+ EXEC sp_executesql @cmd, @parameters, @name = @name
+ go
+
+Use of Stored Procedures
+-Stored procedure does not include any unsafe dynamic SQL generation
+-SQL code for a stored procedure is defined and stored in the database itself
+ - Then called from the application
+-Consider encrypting stored procedure 
+
+Escaping all User Supplied Input
+-Different for each vendor database 
+-Find the punctuation
+ -Rip or replace as text
+-ONLY if you are concerned that rewriting your dynamic queries as prepared statements or stored procedures might break your applicaiton or adversely affect performance
+-Frail compared to parameterized queries
+-For retrofitting legacy code
+ -in cost effective way
+
+Summary
+-Sql injection is an attack methodology that targets the data residing in a database
+-It attempts to modify the parameters of a Web-based application in order to alter the SQL statements that are parsed to retrieve data from the database.
+-Database footprinting is the process of mapping out the tables on the database
+-Exploits occur due to coding errors as well as inadequate validation checks
+-Prevention involves enforcing better coding practices and database administration procedures 
+
+Resources
+-http://unixwiz.net/techtips/sql-injection.html - elegant
+-http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/ - :) types of SQL inject 
+-https://www.owasp.org/index.php/Reviewing_Code_for_SQL_Injection - what are the defenders doing?
+HAPPY INJECTING!!!!
+Send an email Dean.bushmiller@expandingsecurity.com hey whats the best SQL book today?
+
+
+
+
+
+ 
+
+
+
+ 
+
+  
+
+
+
+
+  
+
+  
